@@ -4,3 +4,4 @@ Profesor: Ing. Milton Villegas Lemus
 Estudiantes: 
 Acuña Durán Oscar Arturo
 Rojas Rojas Mariana Saray
+Para correr el programa tiene que tener la biblioteca PyGame instalada
