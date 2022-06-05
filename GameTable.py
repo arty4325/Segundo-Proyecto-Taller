@@ -6,7 +6,9 @@ Acuña Duran Oscar
 
 import pygame #Se va a hacer uso de pygame para programar el juego
 import os #Esta libreria se usa para obtener las imagenes del sistema operativo 
-import Game_Functions
+import tkinter as tk
+import FuncionesArturo
+import FuncionesMariana
 
 
 WIN = pygame.display.set_mode((1700, 800))
@@ -20,15 +22,15 @@ def draw_window():
 
 
 def main():
+    global run
     clock = pygame.time.Clock()
-    run = True
     while run:
         clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
         draw_window()
-    Game_Functions.redrawWindow(WIN)
+
     
     
     pygame.quit()
