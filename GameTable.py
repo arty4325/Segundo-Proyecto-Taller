@@ -10,14 +10,22 @@ import tkinter as tk
 import FuncionesArturo
 import FuncionesMariana
 
+global run 
+global WIN
+run = True
 
-WIN = pygame.display.set_mode((1700, 800))
+
 FPS = 60
+WIN = None
+
+def RunGame(User, CantBoats, Matrix):
+    global WIN
+    WIN = pygame.display.set_mode((1700, 800))
+    main()
 
 
 def draw_window():
     WIN.fill((17,114,169))
-    
     pygame.display.update()
 
 
@@ -35,5 +43,4 @@ def main():
     
     pygame.quit()
 
-if __name__ == "__main__":
-    main()
+

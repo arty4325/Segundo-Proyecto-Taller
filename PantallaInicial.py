@@ -8,6 +8,7 @@ Y le permite al jugador iniciar una partida que ya estuviera guardada
 
 import tkinter as tk
 from PIL import Image, ImageTk
+import GameTable
 
 
 window = tk.Tk()
@@ -93,6 +94,7 @@ def PantallaInicial(window, Inicio):
     window.mainloop()
 
 def NewAccountWindow(window, Inicio):
+    
     Background = ImageTk.PhotoImage(file = "Images/BegginningLogo.png")
     Inicio.create_image(50, 0, image = Background, anchor = "nw")
     
@@ -102,10 +104,15 @@ def NewAccountWindow(window, Inicio):
     def UserLoad():
         nonlocal UserEntry
         User = UserEntry.get()
-        print(User)
+        window.destroy()
+        GameTable.RunGame(User, 0, [])
+        
+        
+        
         
     UserButton = tk.Button(Inicio, command = UserLoad, text = "Nombre de usuario")
     UserButton.place(x = 170, y = 390, anchor = "nw")
+    
     
     window.mainloop()
     
