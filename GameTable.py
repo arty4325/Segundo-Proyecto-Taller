@@ -42,6 +42,7 @@ def draw_window():
     
 
     board.draw(WIN)
+    board.draw_enemy(WIN)
 
     
     
