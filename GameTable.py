@@ -18,15 +18,17 @@ run = True
 FPS = 60
 WIN = None
 
+
 def RunGame(User, CantBoats, Matrix):
     global WIN
-    WIN = pygame.display.set_mode((1700, 800))
+    WIN = pygame.display.set_mode((1450, 700))
     main()
 
 
 def draw_window():
     WIN.fill((17,114,169))
     pygame.display.update()
+    
 
 
 def main():
