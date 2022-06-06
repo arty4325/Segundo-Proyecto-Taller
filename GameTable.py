@@ -10,6 +10,9 @@ import tkinter as tk
 import FuncionesArturo
 import FuncionesMariana
 
+from FuncionesArturo import Board
+
+
 global run 
 global WIN
 run = True
@@ -19,18 +22,32 @@ FPS = 60
 WIN = None
 
 
+from FuncionesArturo import WIDTH, HEIGHT 
+
+
 def RunGame(User, CantBoats, Matrix):
     global WIN
-    WIN = pygame.display.set_mode((1450, 700))
+    WIN = pygame.display.set_mode((WIDTH, HEIGHT))
     main()
 
 
 def draw_window():
-    WIN.fill((17,114,169))
-    pygame.display.update()
+    # WIN.fill((17,114,169))
+    
+    board = Board()
+
+
+    
+    pygame.display.set_caption("Battleship")
     
 
+    board.draw(WIN)
 
+    
+    
+    pygame.display.update()
+    
+    
 def main():
     global run
     clock = pygame.time.Clock()
@@ -39,6 +56,10 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+            if event.type == pygame.MOUSEBUTTONDOWN: #Cambiar esto por la idea en WASD con la casilla que selecciona
+                pass 
+
+            
         draw_window()
 
     
