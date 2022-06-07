@@ -26,7 +26,7 @@ class Board:
         self.board = [] #Representacion interna del tablero (Probs esto se guarde en el .txt)
         self.enemy_board = []
         self.selected_piece = None #Se ha seleccionado o no se ha seleccionado 
-        self.red_left = self.white_left = 12 #Se han seleccionado piezas ? 
+        self.red_left = self.white_left = 12 # Se han seleccionado piezas ? 
         self.red_kings = self.white_kings = 0 
         self.create_board()
         self.create_enemy_board()
@@ -60,15 +60,6 @@ class Board:
                 else:
                     self.board[row].append(0)
                     
-
-    def draw(self, win): #Esto dibuja todo 
-        self.draw_squares(win)
-        for row in range(ROWS):
-            for col in range(COLS):
-                piece = self.board[row][col]
-                if piece != 0:
-                    piece.draw(win)
-                    
     def create_enemy_board(self): #Se tienen que crear piezas, depsues esto se va a cambiar para que sea el usuario el que las crea
         for row in range(ROWS):
             self.enemy_board.append([]) #Se quiere tener una lista interna para cada row
@@ -84,7 +75,15 @@ class Board:
                         self.enemy_board[row].append(0) #No se tiene pieza en esta momento, se puede ver bien qeu es lo que se tiene en cada fila o columna
                 else:
                     self.enemy_board[row].append(0)
-        
+
+    def draw(self, win): #Esto dibuja todo 
+        self.draw_squares(win)
+        for row in range(ROWS):
+            for col in range(COLS):
+                piece = self.board[row][col]
+                if piece != 0:
+                    piece.draw(win)
+                    
         
     def draw_enemy(self, win): #Esto dibuja todo 
         self.draw_enemy_squares(win)
@@ -97,7 +96,7 @@ class Board:
     #def create_board(self): #Se agregan piezas
 
 
-class Piece:
+class Piece: #Esta clase tiene que ser modificada para despues trabajar con los barcos 
     PADDING = 10
     OUTLINE = 2
     def __init__(self, row, col, color):
@@ -139,8 +138,8 @@ class Piece:
 
 
      
-        
-        
+
+
         
         
         
