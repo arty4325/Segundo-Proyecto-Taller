@@ -69,7 +69,7 @@ def draw_window(cursor):
         if cursor.y != 630:
             cursor.y += 70
     if keys_pressed[pygame.K_q]:
-        print(cursor.x, cursor.y)
+        print(cursor.x, cursor.y) #la idea es que esto modifique la matriz cuando se selecciona
         
     pygame.display.update()
 
