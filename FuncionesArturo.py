@@ -10,7 +10,7 @@ import os #Esta libreria se usa para obtener las imagenes del sistema operativo
 
 # Funciones arturo :)
 
-WIDTH, HEIGHT = 1450, 700 #Tamaño de la pantalla 
+WIDTH, HEIGHT = 1450, 850 #Tamaño de la pantalla 
 ROWS, COLS = 10, 10
 SQUARE_SIZE = 700//COLS
 
@@ -19,11 +19,20 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 BLUE = (0, 0, 255) 
 GREY = (128, 128, 128)
-
+THEBOARD = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
 class Board:
     def __init__(self):
-        self.board = [] #Representacion interna del tablero (Probs esto se guarde en el .txt)
+        self.board = THEBOARD #Representacion interna del tablero (Probs esto se guarde en el .txt)
         self.enemy_board = []
         self.selected_piece = None #Se ha seleccionado o no se ha seleccionado 
         self.red_left = self.white_left = 12 # Se han seleccionado piezas ? 
@@ -46,8 +55,10 @@ class Board:
     
     def create_board(self): #Se tienen que crear piezas, depsues esto se va a cambiar para que sea el usuario el que las crea
         for row in range(ROWS):
-            self.board.append([]) #Se quiere tener una lista interna para cada row
+            #self.board.append([]) #Se quiere tener una lista interna para cada row
+            """
             for col in range(COLS):
+
                 if col % 2 == ((row + 1)%2): #Si la columna en la que estamos es igual a la otra vara mas uno pero diferente puede dibujar la vara
                     #CAMBIAR esto no es asi
                     #A como esta puesto ahora es para hacer las piezas intercaladas en esto
@@ -59,39 +70,61 @@ class Board:
                         self.board[row].append(0) #No se tiene pieza en esta momento, se puede ver bien qeu es lo que se tiene en cada fila o columna
                 else:
                     self.board[row].append(0)
+
+                self.board[row].append(0)
+            """
                     
     def create_enemy_board(self): #Se tienen que crear piezas, depsues esto se va a cambiar para que sea el usuario el que las crea
         for row in range(ROWS):
-            self.enemy_board.append([]) #Se quiere tener una lista interna para cada row
+            #self.enemy_board.append([]) #Se quiere tener una lista interna para cada row
+            """
             for col in range(COLS):
+                
                 if col % 2 == ((row + 1)%2): #Si la columna en la que estamos es igual a la otra vara mas uno pero diferente puede dibujar la vara
                     #CAMBIAR esto no es asi
                     #A como esta puesto ahora es para hacer las piezas intercaladas en esto
+                    
                     if row < 3:
                         self.enemy_board[row].append(Piece(row, col, WHITE))
                     elif row > 4:
                         self.enemy_board[row].append(Piece(row, col, RED))
                     else:
                         self.enemy_board[row].append(0) #No se tiene pieza en esta momento, se puede ver bien qeu es lo que se tiene en cada fila o columna
+                    
                 else:
-                    self.enemy_board[row].append(0)
-
+                
+                self.enemy_board[row].append(0)
+            """
+            
+    def draw_boat(self, row, col):
+        self.board[row][col] = 1
+        print(self.board, row, col)
+        
+   
+        
+    
+    
     def draw(self, win): #Esto dibuja todo 
         self.draw_squares(win)
+        #print(self.board)
+        """
         for row in range(ROWS):
             for col in range(COLS):
                 piece = self.board[row][col]
                 if piece != 0:
                     piece.draw(win)
-                    
-        
+        """
+
     def draw_enemy(self, win): #Esto dibuja todo 
         self.draw_enemy_squares(win)
+        """
         for row in range(ROWS):
             for col in range(COLS):
                 piece = self.enemy_board[row][col]
                 if piece != 0:
                     piece.draw_enemy(win)
+        """
+   
                     
     #def create_board(self): #Se agregan piezas
 
@@ -135,7 +168,6 @@ class Piece: #Esta clase tiene que ser modificada para despues trabajar con los 
     
     def __repr__(self):
          return str(self.color)
-
 
      
 

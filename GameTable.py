@@ -52,6 +52,7 @@ def draw_window(cursor):
     board.draw(WIN)
     board.draw_enemy(WIN)
     
+    
 
     WIN.blit(Cursor, (cursor.x, cursor.y))
     
@@ -69,7 +70,8 @@ def draw_window(cursor):
         if cursor.y != 630:
             cursor.y += 70
     if keys_pressed[pygame.K_q]:
-        print(cursor.x, cursor.y) #la idea es que esto modifique la matriz cuando se selecciona
+        #print(cursor.x, cursor.y) #la idea es que esto modifique la matriz cuando se selecciona
+        board.draw_boat((cursor.x - 750)//70, (cursor.y%750)//70)
         
     pygame.display.update()
 
