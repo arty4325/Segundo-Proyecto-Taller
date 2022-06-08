@@ -19,6 +19,7 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 BLUE = (0, 0, 255) 
 GREY = (128, 128, 128)
+
 THEBOARD = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
@@ -96,12 +97,15 @@ class Board:
                 self.enemy_board[row].append(0)
             """
             
-    def draw_boat(self, row, col):
-        self.board[row][col] = 1
+    def draw_boat(self, row, col, win):
+        self.board[col][row] = 1
         print(self.board, row, col)
-        
+        self.draw_squares(win)
+        #print(self.board)
+        piece = Piece(col, row, WHITE)
+        piece.draw(win)
    
-        
+    
     
     
     def draw(self, win): #Esto dibuja todo 
@@ -124,6 +128,14 @@ class Board:
                 if piece != 0:
                     piece.draw_enemy(win)
         """
+        
+    def make_enemys(self, win):
+        for row in range(ROWS):
+            for col in range(COLS):
+                flag = self.board[col][row]
+                if flag == 1:
+                    piece = Piece(col, row, WHITE)
+                    piece.draw(win)
    
                     
     #def create_board(self): #Se agregan piezas
