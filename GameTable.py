@@ -42,18 +42,13 @@ Cursor = pygame.image.load(os.path.join("Images", "Cursor.png"))
 
 def draw_window(cursor):
     # WIN.fill((17,114,169))
-    
-    
+   
     board = Board()
     pygame.display.set_caption("Battleship")
-    
-    
-    
+
     board.draw(WIN)
     board.draw_enemy(WIN)
     board.make_enemys(WIN)
-    
-    
 
     WIN.blit(Cursor, (cursor.x, cursor.y))
     

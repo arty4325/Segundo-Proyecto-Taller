@@ -20,17 +20,59 @@ BLACK = (0, 0, 0)
 BLUE = (0, 0, 255) 
 GREY = (128, 128, 128)
 
-THEBOARD = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
+def CreateBoards(Bool, User):
+    if Bool:
+        global THEBOARD
+        THEBOARD = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+        ENEMYBOARD = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+        SAVE = open(User + ".txt", "w+")
+        for i in range(10):
+            SAVE.write(str(THEBOARD[i]) + "\n")
+        for i in range(10):
+            SAVE.write(str(ENEMYBOARD[i]) + "\n")
+        SAVE.close()
+        
+        
+    if not Bool:
+        BOARDS = open(User + ".txt", "r")
+        THEBOARD = []
+        ENEMYBOARD = []
+        for i in range(10):
+            THEBOARD.append([])
+            Var = BOARDS.readline()
+            for k in Var[1:-2]:
+                if k != "," and k != " ":
+                    THEBOARD[i].append(int(k))
+        for i in range(10):
+            ENEMYBOARD.append([])
+            Var = BOARDS.readline()
+            for k in Var[1:-2]:
+                if k != "," and k != " ":
+                    ENEMYBOARD[i].append(int(k))
+    print(THEBOARD, ENEMYBOARD)
+            
+        
+        
+    
 class Board:
     def __init__(self):
         self.board = THEBOARD #Representacion interna del tablero (Probs esto se guarde en el .txt)
@@ -69,6 +111,8 @@ class Board:
 
     def draw_enemy(self, win): #Esto dibuja todo 
         self.draw_enemy_squares(win)
+        
+        
         
     def make_enemys(self, win):
         for row in range(ROWS):

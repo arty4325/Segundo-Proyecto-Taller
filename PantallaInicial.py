@@ -9,6 +9,9 @@ Y le permite al jugador iniciar una partida que ya estuviera guardada
 import tkinter as tk
 from PIL import Image, ImageTk
 import GameTable
+import FuncionesArturo
+
+global IsLoaded
 
 
 window = tk.Tk()
@@ -49,6 +52,7 @@ def PantallaInicial(window, Inicio):
         Inicio.delete("all")
         labelDest(temp)
         NewAccountWindow(window, Inicio)
+        
     
     def SavedGame():
         print("Juega partida guardada")
@@ -105,7 +109,9 @@ def NewAccountWindow(window, Inicio):
         nonlocal UserEntry
         User = UserEntry.get()
         window.destroy()
+        FuncionesArturo.CreateBoards(True, User)
         GameTable.RunGame(User, 0, [])
+        
         
         
         
