@@ -38,9 +38,7 @@ class Board:
         self.selected_piece = None #Se ha seleccionado o no se ha seleccionado 
         self.red_left = self.white_left = 12 # Se han seleccionado piezas ? 
         self.red_kings = self.white_kings = 0 
-        self.create_board()
-        self.create_enemy_board()
-    
+
     def draw_squares(self, win):
         #En el caso del battleship todos son azules 
         win.fill(BLACK)
@@ -54,48 +52,6 @@ class Board:
                 pygame.draw.rect(win, RED,  (row*SQUARE_SIZE, col*SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
     
     
-    def create_board(self): #Se tienen que crear piezas, depsues esto se va a cambiar para que sea el usuario el que las crea
-        for row in range(ROWS):
-            #self.board.append([]) #Se quiere tener una lista interna para cada row
-            """
-            for col in range(COLS):
-
-                if col % 2 == ((row + 1)%2): #Si la columna en la que estamos es igual a la otra vara mas uno pero diferente puede dibujar la vara
-                    #CAMBIAR esto no es asi
-                    #A como esta puesto ahora es para hacer las piezas intercaladas en esto
-                    if row < 3:
-                        self.board[row].append(Piece(row, col, WHITE))
-                    elif row > 4:
-                        self.board[row].append(Piece(row, col, RED))
-                    else:
-                        self.board[row].append(0) #No se tiene pieza en esta momento, se puede ver bien qeu es lo que se tiene en cada fila o columna
-                else:
-                    self.board[row].append(0)
-
-                self.board[row].append(0)
-            """
-                    
-    def create_enemy_board(self): #Se tienen que crear piezas, depsues esto se va a cambiar para que sea el usuario el que las crea
-        for row in range(ROWS):
-            #self.enemy_board.append([]) #Se quiere tener una lista interna para cada row
-            """
-            for col in range(COLS):
-                
-                if col % 2 == ((row + 1)%2): #Si la columna en la que estamos es igual a la otra vara mas uno pero diferente puede dibujar la vara
-                    #CAMBIAR esto no es asi
-                    #A como esta puesto ahora es para hacer las piezas intercaladas en esto
-                    
-                    if row < 3:
-                        self.enemy_board[row].append(Piece(row, col, WHITE))
-                    elif row > 4:
-                        self.enemy_board[row].append(Piece(row, col, RED))
-                    else:
-                        self.enemy_board[row].append(0) #No se tiene pieza en esta momento, se puede ver bien qeu es lo que se tiene en cada fila o columna
-                    
-                else:
-                
-                self.enemy_board[row].append(0)
-            """
             
     def draw_boat(self, row, col, win):
         self.board[col][row] = 1
@@ -110,24 +66,9 @@ class Board:
     
     def draw(self, win): #Esto dibuja todo 
         self.draw_squares(win)
-        #print(self.board)
-        """
-        for row in range(ROWS):
-            for col in range(COLS):
-                piece = self.board[row][col]
-                if piece != 0:
-                    piece.draw(win)
-        """
 
     def draw_enemy(self, win): #Esto dibuja todo 
         self.draw_enemy_squares(win)
-        """
-        for row in range(ROWS):
-            for col in range(COLS):
-                piece = self.enemy_board[row][col]
-                if piece != 0:
-                    piece.draw_enemy(win)
-        """
         
     def make_enemys(self, win):
         for row in range(ROWS):
