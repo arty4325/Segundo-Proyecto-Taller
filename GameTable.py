@@ -50,26 +50,22 @@ Barco3 = pygame.image.load(os.path.join("Images", "Barco3.png"))
 Barco4 = pygame.image.load(os.path.join("Images", "Barco4.png"))
 
 def Check_Rotated():
-    global HaveRotated 
+    global Barco2, Barco3, Barco4
+    global barco2, barco3, barco4
+    global WhichBoat
+    global HaveRotated
     keys_pressed = pygame.key.get_pressed()
     if keys_pressed[pygame.K_e]:
-        Rotate_Boat()
-        HaveRotated = not HaveRotated
+        if WhichBoat == Barco4:
+            HaveRotated = not HaveRotated
+            Barco4 = pygame.transform.rotate(Barco4, 270)
+        
+        
     time.sleep(0.1)
     Check_Rotated()
 
-def Rotate_Boat():
-    global barco2, barco3, barco4
-    global Barco2, Barco3, Barco4
-    global HaveRotated 
-    global WhichBoat
-    global selected
-    
-    if HaveRotated:
-        if WhichBoat == Barco4:
-            Barco4 = pygame.transform.rotate(Barco4, 270)
-    else:
-        WhichBoat = pygame.transform.rotate(WhichBoat, 90)
+
+ 
     
     
 
