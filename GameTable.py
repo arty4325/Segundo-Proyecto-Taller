@@ -59,6 +59,12 @@ def Check_Rotated():
         if WhichBoat == Barco4:
             HaveRotated = not HaveRotated
             Barco4 = pygame.transform.rotate(Barco4, 270)
+        if WhichBoat == Barco3:
+            HaveRotated = not HaveRotated
+            Barco3 = pygame.transform.rotate(Barco3, 270)
+        if WhichBoat == Barco2:
+            HaveRotated = not HaveRotated
+            Barco2 = pygame.transform.rotate(Barco2, 270)
         
         
     time.sleep(0.1)
@@ -67,12 +73,16 @@ def Check_Rotated():
 
  
     
-    
+#if keys_pressed[pygame.K_q]:
+#print(cursor.x, cursor.y) #la idea es que esto modifique la matriz cuando se selecciona
+#    board.draw_boat((cursor.x - 750)//70, (cursor.y%750)//70, WIN)
+#if keys_pressed[pygame.K_e]:
 
 def draw_boats(barco2, barco3, barco4, selected):
     global HaveRotated
     global Barco2, Barco3, Barco4
     global WhichBoat
+    global board 
     WIN.blit(Barco2, (barco2.x, barco2.y))
     WIN.blit(Barco3, (barco3.x, barco3.y))
     WIN.blit(Barco4, (barco4.x, barco4.y))
@@ -83,9 +93,10 @@ def draw_boats(barco2, barco3, barco4, selected):
     if selected == barco4:
         WhichBoat = Barco4
 
-        
+    """ 
     if selected == barco2:
         print(selected.x + 210, selected.y)
+    """
     
     #print(selected.x, selected.y)
     
@@ -102,7 +113,53 @@ def draw_boats(barco2, barco3, barco4, selected):
     if keys_pressed[pygame.K_s]:
         if selected.y != 630:
             selected.y += 70
-    #if keys_pressed[pygame.K_e]:
+            
+    if keys_pressed[pygame.K_q]:
+        #print(selected.x, selected.y)
+        board.draw_boat((selected.x - 750)//70, (selected.y%750)//70, WIN)
+        if selected == barco2:
+            #print("yes")
+            if HaveRotated:
+                Var = selected.y
+                while Var != selected.y + 70:
+                    Var += 70
+                    board.draw_boat((selected.x - 750)//70, (Var%750)//70, WIN)
+                    #print(Var)
+            else:
+                Var = selected.x
+                while Var != selected.x + 70:
+                    Var += 70
+                    board.draw_boat((Var - 750)//70, (selected.y%750)//70, WIN)
+                    #print(Var)
+        if selected == barco3:
+            #print("yes")
+            if HaveRotated:
+                Var = selected.y
+                while Var != selected.y + 140:
+                    Var += 70
+                    board.draw_boat((selected.x - 750)//70, (Var%750)//70, WIN)
+                    #print(Var)
+            else:
+                Var = selected.x
+                while Var != selected.x + 140:
+                    Var += 70
+                    board.draw_boat((Var - 750)//70, (selected.y%750)//70, WIN)
+                    #print(Var)
+        if selected == barco4:
+            #print("yes")
+            if HaveRotated:
+                Var = selected.y
+                while Var != selected.y + 210:
+                    Var += 70
+                    board.draw_boat((selected.x - 750)//70, (Var%750)//70, WIN)
+                    #print(Var)
+            else:
+                Var = selected.x
+                while Var != selected.x + 210:
+                    Var += 70
+                    board.draw_boat((Var - 750)//70, (selected.y%750)//70, WIN)
+                    #print(Var)
+                
         
     pygame.display.update()
     
@@ -113,7 +170,7 @@ def draw_boats(barco2, barco3, barco4, selected):
 
 def draw_window(cursor):
     # WIN.fill((17,114,169))
-   
+    global board
     board = Board()
     pygame.display.set_caption("Battleship")
 
@@ -156,7 +213,7 @@ def main():
     barco2 = pygame.Rect(750, -70, 140, 70)
     barco3 = pygame.Rect(750, -70, 210, 70)
     barco4 = pygame.Rect(750, -70, 280, 70)
-    selected = barco4
+    selected = barco3
     
     
     global run
@@ -173,7 +230,7 @@ def main():
         
         draw_window(cursor)
         draw_boats(barco2, barco3, barco4, selected)
-        print(HaveRotated)
+
         
         
         
