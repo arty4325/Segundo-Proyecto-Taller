@@ -22,8 +22,8 @@ GREY = (128, 128, 128)
 
 
 def CreateBoards(Bool, User):
+    global THEBOARD, ENEMYBOARD
     if Bool:
-        global THEBOARD
         THEBOARD = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
@@ -68,8 +68,18 @@ def CreateBoards(Bool, User):
             for k in Var[1:-2]:
                 if k != "," and k != " ":
                     ENEMYBOARD[i].append(int(k))
+        BOARDS.close()
     print(THEBOARD, ENEMYBOARD)
-            
+
+def SafeBoards(User):
+    global THEBOARD, ENEMYBOARD
+    SAVE = open(User + ".txt", "w+")
+    for i in range(10):
+        SAVE.write(str(THEBOARD[i]) + "\n")
+    for i in range(10):
+        SAVE.write(str(ENEMYBOARD[i]) + "\n")
+    
+                
         
         
     
@@ -121,6 +131,8 @@ class Board:
                 if flag == 1:
                     piece = Piece(col, row, WHITE)
                     piece.draw(win)
+        
+    
    
                     
     #def create_board(self): #Se agregan piezas

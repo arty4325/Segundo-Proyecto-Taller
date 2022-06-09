@@ -58,6 +58,7 @@ def PantallaInicial(window, Inicio):
         print("Juega partida guardada")
         Inicio.delete("all")
         labelDest(temp)
+        OldAccountWindow(window, Inicio)
     
     def About():
         print("PantallaAbout")
@@ -110,6 +111,32 @@ def NewAccountWindow(window, Inicio):
         User = UserEntry.get()
         window.destroy()
         FuncionesArturo.CreateBoards(True, User)
+        GameTable.RunGame(User, 0, [])
+        
+        
+        
+        
+        
+    UserButton = tk.Button(Inicio, command = UserLoad, text = "Nombre de usuario")
+    UserButton.place(x = 170, y = 390, anchor = "nw")
+    
+    
+    window.mainloop()
+
+def OldAccountWindow(window, Inicio):
+    
+    Background = ImageTk.PhotoImage(file = "Images/BegginningLogo.png")
+    Inicio.create_image(50, 0, image = Background, anchor = "nw")
+    
+    UserEntry = tk.Entry(Inicio, width = 10, font = ("Helvetica", 50))
+    UserEntry.place(x = 170, y = 300, anchor = "nw")
+    # Se podria programar que revise si ese nombre de usuario existe
+    
+    def UserLoad():
+        nonlocal UserEntry
+        User = UserEntry.get()
+        window.destroy()
+        FuncionesArturo.CreateBoards(False, User)
         GameTable.RunGame(User, 0, [])
         
         
