@@ -19,6 +19,8 @@ global run
 global WIN
 global HaveRotated
 global selected
+global NotPlaying
+NotPlaying = True
 selected = None
 HaveRotated = False
 run = True
@@ -30,9 +32,11 @@ WIN = None
 
 from FuncionesArturo import WIDTH, HEIGHT 
 
-def RunGame(TheUser, CantBoats, Matrix):
+def RunGame(TheUser, CBoats, Matrix):
     global User
     User = TheUser
+    global CantBoats
+    CantBoats = CBoats
     global WIN
     WIN = pygame.display.set_mode((WIDTH, HEIGHT))
     
@@ -83,6 +87,7 @@ def draw_boats(barco2, barco3, barco4, selected):
     global Barco2, Barco3, Barco4
     global WhichBoat
     global board 
+    global NotPlaying, CantBoats
     WIN.blit(Barco2, (barco2.x, barco2.y))
     WIN.blit(Barco3, (barco3.x, barco3.y))
     WIN.blit(Barco4, (barco4.x, barco4.y))
@@ -99,6 +104,9 @@ def draw_boats(barco2, barco3, barco4, selected):
     """
     
     #print(selected.x, selected.y)
+    
+
+            
     
     keys_pressed = pygame.key.get_pressed()
     if keys_pressed[pygame.K_a]:
@@ -125,12 +133,14 @@ def draw_boats(barco2, barco3, barco4, selected):
                     Var += 70
                     board.draw_boat((selected.x - 750)//70, (Var%750)//70, WIN)
                     #print(Var)
+                CantBoats[2] -= 1
             else:
                 Var = selected.x
                 while Var != selected.x + 70:
                     Var += 70
                     board.draw_boat((Var - 750)//70, (selected.y%750)//70, WIN)
                     #print(Var)
+                CantBoats[2] -= 1
         if selected == barco3:
             #print("yes")
             if HaveRotated:
@@ -139,12 +149,14 @@ def draw_boats(barco2, barco3, barco4, selected):
                     Var += 70
                     board.draw_boat((selected.x - 750)//70, (Var%750)//70, WIN)
                     #print(Var)
+                CantBoats[1] -= 1
             else:
                 Var = selected.x
                 while Var != selected.x + 140:
                     Var += 70
                     board.draw_boat((Var - 750)//70, (selected.y%750)//70, WIN)
                     #print(Var)
+                CantBoats[1] -= 1
         if selected == barco4:
             #print("yes")
             if HaveRotated:
@@ -153,12 +165,14 @@ def draw_boats(barco2, barco3, barco4, selected):
                     Var += 70
                     board.draw_boat((selected.x - 750)//70, (Var%750)//70, WIN)
                     #print(Var)
+                CantBoats[0] -= 1
             else:
                 Var = selected.x
                 while Var != selected.x + 210:
                     Var += 70
                     board.draw_boat((Var - 750)//70, (selected.y%750)//70, WIN)
                     #print(Var)
+                CantBoats[0] -= 1
                 
         
     pygame.display.update()
@@ -208,18 +222,50 @@ def main():
     global HaveRotated
     global selected
     global barco2, barco3, barco4
+    global NotPlaying
+    global CantBoats
     Thread(target = Check_Rotated, args = ()).start()
-    cursor = pygame.Rect(750, -70, 70, 70)
-    barco2 = pygame.Rect(750, -70, 140, 70)
-    barco3 = pygame.Rect(750, -70, 210, 70)
-    barco4 = pygame.Rect(750, -70, 280, 70)
-    selected = barco3
+    cursor = pygame.Rect(750, 70, 70, 70)
+    barco2 = pygame.Rect(750, -280, 140, 70)
+    barco3 = pygame.Rect(750, -280, 210, 70)
+    barco4 = pygame.Rect(750, -280, 280, 70)
+    #selected = barco2
     
-    
+
+            
+            
     global run
     clock = pygame.time.Clock()
     while run:
         clock.tick(FPS)
+        if NotPlaying and (CantBoats[0] != 0 or CantBoats[1] != 0 or CantBoats[2] != 0):
+            if CantBoats[0] != 0:
+                if selected is not barco4:
+                    cursor = pygame.Rect(750, 70, 70, 70)
+                    barco4 = pygame.Rect(750, 140, 280, 70)
+                selected = barco4
+            elif CantBoats[1] != 0:
+                if selected is not barco3:
+                    cursor = pygame.Rect(750, 70, 70, 70)
+                    barco3 = pygame.Rect(750, 140, 280, 70)
+                selected = barco3
+
+            elif CantBoats[2] != 0:
+                if selected is not barco2:
+                    cursor = pygame.Rect(750, 70, 70, 70)
+                    barco2 = pygame.Rect(750, 140, 280, 70)
+                selected = barco2
+
+            else:
+                NotPlaying = False
+        if CantBoats[0] == 0:
+            barco4 = pygame.Rect(750, -280, 280, 70)
+        if CantBoats[1] == 0:
+            barco3 = pygame.Rect(750, -280, 210, 70)
+        if CantBoats[2] == 0:
+            barco2 = pygame.Rect(750, -280, 280, 70)
+            NotPlaying = False
+        print(CantBoats)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
@@ -229,7 +275,8 @@ def main():
             
         
         draw_window(cursor)
-        draw_boats(barco2, barco3, barco4, selected)
+        if NotPlaying:
+            draw_boats(barco2, barco3, barco4, selected)
 
         
         

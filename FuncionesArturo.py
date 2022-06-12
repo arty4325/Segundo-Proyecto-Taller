@@ -14,9 +14,9 @@ WIDTH, HEIGHT = 1450, 850 #Tamaño de la pantalla
 ROWS, COLS = 10, 10
 SQUARE_SIZE = 700//COLS
 
-RED = (255, 0, 0)
+RED = (65,105,225)
 WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
+BLACK = (0,206,209)
 BLUE = (0, 0, 255) 
 GREY = (128, 128, 128)
 
@@ -88,8 +88,6 @@ class Board:
         self.board = THEBOARD #Representacion interna del tablero (Probs esto se guarde en el .txt)
         self.enemy_board = []
         self.selected_piece = None #Se ha seleccionado o no se ha seleccionado 
-        self.red_left = self.white_left = 12 # Se han seleccionado piezas ? 
-        self.red_kings = self.white_kings = 0 
 
     def draw_squares(self, win):
         #En el caso del battleship todos son azules 
