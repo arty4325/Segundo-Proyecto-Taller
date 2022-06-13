@@ -7,7 +7,7 @@ Created on Sat Jun  4 11:19:30 2022
 
 import pygame #Se va a hacer uso de pygame para programar el juego
 import os #Esta libreria se usa para obtener las imagenes del sistema operativo 
-
+import random 
 # Funciones arturo :)
 
 WIDTH, HEIGHT = 1450, 850 #Tamaño de la pantalla 
@@ -21,8 +21,116 @@ BLUE = (0, 0, 255)
 GREY = (128, 128, 128)
 
 
-def CreateBoards(Bool, User):
+def CreateBoards(Bool, User, Boats):
     global THEBOARD, ENEMYBOARD
+    
+    def choose_enemys(boat, matriz, ret):
+        ret = matriz
+        if boat == 4:
+            orientation = random.choice([0,1])
+            print(orientation)
+            if orientation == 0: #horizontal
+                row = random.choice([0,1,2,3,4,5,6,7,8,9])
+                col = random.choice([0,1,2,3,4,5,6])
+                flag = True
+                for i in range(col,col+4):
+                    if matriz[row][i] != 0: #importante notar el i 
+                        flag = False
+                        
+                if flag == True:
+                    for k in range(col, col + 4):
+                        ret[row][k] = 1
+                        
+                if not flag:
+                    print("it happens")
+                    return choose_enemys(boat, matriz, ret)
+                
+            if orientation == 1:
+                row = random.choice([0,1,2,3,4,5,6])
+                col = random.choice([0,1,2,3,4,5,6,7,8,9])
+                flag = True
+                
+                for i in range(row, row + 4):
+                    if matriz[i][col] != 0:
+                        flag = False
+                        
+                if flag:
+                    for i in range(row, row + 4):
+                        ret[i][col] = 1
+                if not flag:
+                    print("it happens")
+                    return choose_enemys(boat, matriz, ret)
+        if boat == 3:
+            orientation = random.choice([0,1])
+            print(orientation)
+            if orientation == 0: #horizontal
+                row = random.choice([0,1,2,3,4,5,6,7,8,9])
+                col = random.choice([0,1,2,3,4,5,6,7])
+                flag = True
+                for i in range(col,col+3):
+                    if matriz[row][i] != 0: #importante notar el i 
+                        flag = False
+                        
+                if flag == True:
+                    for k in range(col, col + 3):
+                        ret[row][k] = 1
+                        
+                if not flag:
+                    print("it happens")
+                    return choose_enemys(boat, matriz, ret)
+                
+            if orientation == 1:
+                row = random.choice([0,1,2,3,4,5,6,7])
+                col = random.choice([0,1,2,3,4,5,6,7,8,9])
+                flag = True
+                
+                for i in range(row, row + 3):
+                    if matriz[i][col] != 0:
+                        flag = False
+                        
+                if flag:
+                    for i in range(row, row + 3):
+                        ret[i][col] = 1
+                if not flag:
+                    print("it happens")
+                    return choose_enemys(boat, matriz, ret)
+        if boat == 2:
+            orientation = random.choice([0,1])
+            print(orientation)
+            if orientation == 0: #horizontal
+                row = random.choice([0,1,2,3,4,5,6,7,8,9])
+                col = random.choice([0,1,2,3,4,5,6,7,8])
+                flag = True
+                for i in range(col,col+2):
+                    if matriz[row][i] != 0: #importante notar el i 
+                        flag = False
+                        
+                if flag == True:
+                    for k in range(col, col + 2):
+                        ret[row][k] = 1
+                        
+                if not flag:
+                    print("it happens")
+                    return choose_enemys(boat, matriz, ret)
+                
+            if orientation == 1:
+                row = random.choice([0,1,2,3,4,5,6,7,8])
+                col = random.choice([0,1,2,3,4,5,6,7,8,9])
+                flag = True
+                
+                for i in range(row, row + 2):
+                    if matriz[i][col] != 0:
+                        flag = False
+                        
+                if flag:
+                    for i in range(row, row + 2):
+                        ret[i][col] = 1
+                if not flag:
+                    print("it happens")
+                    return choose_enemys(boat, matriz, ret)
+        return ret
+    
+    
     if Bool:
         THEBOARD = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
@@ -44,13 +152,27 @@ def CreateBoards(Bool, User):
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+        
+        while Boats[0] != 0:
+            ENEMYBOARD = choose_enemys(4, ENEMYBOARD, [])
+            Boats[0] -= 1
+        while Boats[1] != 0:
+            ENEMYBOARD = choose_enemys(3, ENEMYBOARD, [])
+            Boats[1] -= 1
+        while Boats[2] != 0:
+            ENEMYBOARD = choose_enemys(2, ENEMYBOARD, [])
+            Boats[2] -= 1
+        
         SAVE = open(User + ".txt", "w+")
         for i in range(10):
             SAVE.write(str(THEBOARD[i]) + "\n")
         for i in range(10):
             SAVE.write(str(ENEMYBOARD[i]) + "\n")
         SAVE.close()
-        
+    
+    
+    
+
         
     if not Bool:
         BOARDS = open(User + ".txt", "r")
@@ -70,6 +192,9 @@ def CreateBoards(Bool, User):
                     ENEMYBOARD[i].append(int(k))
         BOARDS.close()
     print(THEBOARD, ENEMYBOARD)
+
+
+
 
 def SafeBoards(User):
     global THEBOARD, ENEMYBOARD

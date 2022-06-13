@@ -122,6 +122,10 @@ def draw_boats(barco2, barco3, barco4, selected):
         if selected.y != 630:
             selected.y += 70
             
+            
+    #En esta parte falta hacer una serie de validaciones, en concreto se tiene que revisar que las fichas no se estan 
+    #Colocando encima de otras 
+    #Eso se hara posteriormente
     if keys_pressed[pygame.K_q]:
         #print(selected.x, selected.y)
         board.draw_boat((selected.x - 750)//70, (selected.y%750)//70, WIN)
@@ -243,21 +247,25 @@ def main():
                 if selected is not barco4:
                     cursor = pygame.Rect(750, 70, 70, 70)
                     barco4 = pygame.Rect(750, 140, 280, 70)
+                    HaveRotated = False
                 selected = barco4
             elif CantBoats[1] != 0:
                 if selected is not barco3:
                     cursor = pygame.Rect(750, 70, 70, 70)
                     barco3 = pygame.Rect(750, 140, 280, 70)
+                    HaveRotated = False
                 selected = barco3
 
             elif CantBoats[2] != 0:
                 if selected is not barco2:
                     cursor = pygame.Rect(750, 70, 70, 70)
                     barco2 = pygame.Rect(750, 140, 280, 70)
+                    HaveRotated = False
                 selected = barco2
 
             else:
                 NotPlaying = False
+                
         if CantBoats[0] == 0:
             barco4 = pygame.Rect(750, -280, 280, 70)
         if CantBoats[1] == 0:
@@ -265,7 +273,11 @@ def main():
         if CantBoats[2] == 0:
             barco2 = pygame.Rect(750, -280, 280, 70)
             NotPlaying = False
-        print(CantBoats)
+        
+        
+        #print(CantBoats)
+        
+        # Ahora se quiere hacer un if para cuando is playing de la vara
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False

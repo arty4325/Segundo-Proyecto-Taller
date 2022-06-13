@@ -122,7 +122,7 @@ def NewAccountWindow(window, Inicio):
         nonlocal UserEntry
         User = UserEntry.get()
         window.destroy()
-        FuncionesArturo.CreateBoards(True, User)
+        FuncionesArturo.CreateBoards(True, User, [3,3,3])
         GameTable.RunGame(User, [3,3,3], [])
         
         
@@ -148,7 +148,7 @@ def OldAccountWindow(window, Inicio):
         nonlocal UserEntry
         User = UserEntry.get()
         window.destroy()
-        FuncionesArturo.CreateBoards(False, User)
+        FuncionesArturo.CreateBoards(False, User,[])
         GameTable.RunGame(User, [0,0,0], [])
         
         
