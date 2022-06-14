@@ -10,7 +10,7 @@ import os #Esta libreria se usa para obtener las imagenes del sistema operativo
 import random 
 # Funciones arturo :)
 
-WIDTH, HEIGHT = 1450, 850 #Tamaño de la pantalla 
+WIDTH, HEIGHT = 1450, 700 #Tamaño de la pantalla 
 ROWS, COLS = 10, 10
 SQUARE_SIZE = 700//COLS
 
@@ -28,7 +28,7 @@ def CreateBoards(Bool, User, Boats):
         ret = matriz
         if boat == 4:
             orientation = random.choice([0,1])
-            print(orientation)
+            #print(orientation)
             if orientation == 0: #horizontal
                 row = random.choice([0,1,2,3,4,5,6,7,8,9])
                 col = random.choice([0,1,2,3,4,5,6])
@@ -42,7 +42,7 @@ def CreateBoards(Bool, User, Boats):
                         ret[row][k] = 1
                         
                 if not flag:
-                    print("it happens")
+                    #print("it happens")
                     return choose_enemys(boat, matriz, ret)
                 
             if orientation == 1:
@@ -58,11 +58,11 @@ def CreateBoards(Bool, User, Boats):
                     for i in range(row, row + 4):
                         ret[i][col] = 1
                 if not flag:
-                    print("it happens")
+                    #print("it happens")
                     return choose_enemys(boat, matriz, ret)
         if boat == 3:
             orientation = random.choice([0,1])
-            print(orientation)
+            #print(orientation)
             if orientation == 0: #horizontal
                 row = random.choice([0,1,2,3,4,5,6,7,8,9])
                 col = random.choice([0,1,2,3,4,5,6,7])
@@ -76,7 +76,7 @@ def CreateBoards(Bool, User, Boats):
                         ret[row][k] = 1
                         
                 if not flag:
-                    print("it happens")
+                    #print("it happens")
                     return choose_enemys(boat, matriz, ret)
                 
             if orientation == 1:
@@ -92,11 +92,11 @@ def CreateBoards(Bool, User, Boats):
                     for i in range(row, row + 3):
                         ret[i][col] = 1
                 if not flag:
-                    print("it happens")
+                    #print("it happens")
                     return choose_enemys(boat, matriz, ret)
         if boat == 2:
             orientation = random.choice([0,1])
-            print(orientation)
+            #print(orientation)
             if orientation == 0: #horizontal
                 row = random.choice([0,1,2,3,4,5,6,7,8,9])
                 col = random.choice([0,1,2,3,4,5,6,7,8])
@@ -110,7 +110,7 @@ def CreateBoards(Bool, User, Boats):
                         ret[row][k] = 1
                         
                 if not flag:
-                    print("it happens")
+                    #print("it happens")
                     return choose_enemys(boat, matriz, ret)
                 
             if orientation == 1:
@@ -126,7 +126,7 @@ def CreateBoards(Bool, User, Boats):
                     for i in range(row, row + 2):
                         ret[i][col] = 1
                 if not flag:
-                    print("it happens")
+                    #print("it happens")
                     return choose_enemys(boat, matriz, ret)
         return ret
     
@@ -191,7 +191,7 @@ def CreateBoards(Bool, User, Boats):
                 if k != "," and k != " ":
                     ENEMYBOARD[i].append(int(k))
         BOARDS.close()
-    print(THEBOARD, ENEMYBOARD)
+    #print(THEBOARD, ENEMYBOARD)
 
 
 
@@ -230,7 +230,7 @@ class Board:
             
     def draw_boat(self, row, col, win):
         self.board[col][row] = 1
-        print(self.board, row, col)
+        #print(self.board, row, col)
         self.draw_squares(win)
         #print(self.board)
         piece = Piece(col, row, WHITE)
