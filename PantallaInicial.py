@@ -123,7 +123,7 @@ def NewAccountWindow(window, Inicio):
         User = UserEntry.get()
         window.destroy()
         FuncionesArturo.CreateBoards(True, User, [3,3,3])
-        GameTable.RunGame(User, [3,3,3], []) 
+        GameTable.RunGame(User, [3,3,3], [], True) 
         # grandes , medianos , pequeños 
         
         
@@ -150,7 +150,7 @@ def OldAccountWindow(window, Inicio):
         User = UserEntry.get()
         window.destroy()
         FuncionesArturo.CreateBoards(False, User,[])
-        GameTable.RunGame(User, [0,0,0], [])
+        GameTable.RunGame(User, [0,0,0], [], False)
         
         
         

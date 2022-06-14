@@ -32,7 +32,10 @@ WIN = None
 
 from FuncionesArturo import WIDTH, HEIGHT 
 
-def RunGame(TheUser, CBoats, Matrix):
+def RunGame(TheUser, CBoats, Matrix, Bool):
+    global ImPlaying 
+    if Bool == False:
+        ImPlaying = True
     global User
     User = TheUser
     global CantBoats
@@ -88,6 +91,7 @@ def draw_boats(barco2, barco3, barco4, selected):
     global WhichBoat
     global board 
     global NotPlaying, CantBoats
+    global ImPlaying
     
     WIN.blit(Barco2, (barco2.x, barco2.y))
     WIN.blit(Barco3, (barco3.x, barco3.y))
@@ -180,7 +184,8 @@ def draw_boats(barco2, barco3, barco4, selected):
                     board.draw_boat((Var - 750)//70, (selected.y%750)//70, WIN)
                     #print(Var)
                 CantBoats[0] -= 1
-                
+        if CantBoats[0] == 0 and CantBoats[1] == 0 and CantBoats[2] == 0:
+             ImPlaying = True
         
     pygame.display.update()
     
@@ -198,51 +203,37 @@ def draw_window():
     board.draw(WIN)
     board.draw_enemy(WIN)
     board.make_enemys(WIN)
-
-    #WIN.blit(Cursor, (cursor.x, cursor.y))
-    
-    #keys_pressed = pygame.key.get_pressed()
-    #if keys_pressed[pygame.K_a]:
-    #    if cursor.x != 750:
-    #        cursor.x -= 70
-    #if keys_pressed[pygame.K_d]:
-    #    if cursor.x != 1380:
-    #        cursor.x += 70
-    #if keys_pressed[pygame.K_w]:
-    #    if cursor.y != 0:
-    #        cursor.y -= 70
-    #if keys_pressed[pygame.K_s]:
-    #    if cursor.y != 630:
-    #        cursor.y += 70
-    #if keys_pressed[pygame.K_q]:
-        #print(cursor.x, cursor.y) #la idea es que esto modifique la matriz cuando se selecciona
-    #    board.draw_boat((cursor.x - 750)//70, (cursor.y%750)//70, WIN)
-    #if keys_pressed[pygame.K_e]:
-        
-        
+    board.draw_on_enemyboard(WIN)
     pygame.display.update()
 
 
 def Play_Game(cursor):
+    global ImPlaying #Esta variable dicta si yo estoy jugando o si esta jugando mi enemigo lets go 
     WIN.blit(Cursor, (cursor.x, cursor.y))
     
     keys_pressed = pygame.key.get_pressed()
-    if keys_pressed[pygame.K_a]:
-        if cursor.x != 750:
-            cursor.x -= 70
-    if keys_pressed[pygame.K_d]:
-        if cursor.x != 1380:
-            cursor.x += 70
-    if keys_pressed[pygame.K_w]:
-        if cursor.y != 0:
-            cursor.y -= 70
-    if keys_pressed[pygame.K_s]:
-        if cursor.y != 630:
-            cursor.y += 70
-    if keys_pressed[pygame.K_q]:
-        print((cursor.x - 750)//70, (cursor.y%750)//70) #la idea es que esto modifique la matriz cuando se selecciona
+    if ImPlaying:
+        if keys_pressed[pygame.K_a]:
+            if cursor.x != 750:
+                cursor.x -= 70
+        if keys_pressed[pygame.K_d]:
+            if cursor.x != 1380:
+                cursor.x += 70
+        if keys_pressed[pygame.K_w]:
+            if cursor.y != 0:
+                cursor.y -= 70
+        if keys_pressed[pygame.K_s]:
+            if cursor.y != 630:
+                cursor.y += 70
+        if keys_pressed[pygame.K_q]:
+            print((cursor.x - 750)//70, (cursor.y%750)//70) #la idea es que esto modifique la matriz cuando se selecciona
+            board.draw_selected_notkilled_boat((cursor.x - 750)//70, (cursor.y%750)//70, WIN)
+            ImPlaying = False
         #board.draw_boat((cursor.x - 750)//70, (cursor.y%750)//70, WIN)
     #if keys_pressed[pygame.K_e]:
+    if ImPlaying == False:
+        print("Juega el enemigo")
+        ImPlaying = True
         
     pygame.display.update()
 
@@ -250,6 +241,7 @@ def Play_Game(cursor):
 
 def main():
     #Se define el cubo 
+    global ImPlaying
     global HaveRotated
     global selected
     global barco2, barco3, barco4
@@ -292,6 +284,7 @@ def main():
 
             else:
                 NotPlaying = False
+                
                 
         if CantBoats[0] == 0:
             barco4 = pygame.Rect(750, -280, 280, 70)

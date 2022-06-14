@@ -211,7 +211,7 @@ def SafeBoards(User):
 class Board:
     def __init__(self):
         self.board = THEBOARD #Representacion interna del tablero (Probs esto se guarde en el .txt)
-        self.enemy_board = []
+        self.enemy_board = ENEMYBOARD
         self.selected_piece = None #Se ha seleccionado o no se ha seleccionado 
 
     def draw_squares(self, win):
@@ -245,7 +245,11 @@ class Board:
     def draw_enemy(self, win): #Esto dibuja todo 
         self.draw_enemy_squares(win)
         
-        
+    def draw_selected_notkilled_boat(self, row, col, win):
+        self.enemy_board[col][row] = 2 #Esto se usa cuando uno dispara a una casilla en la cual no hay un bote
+        self.draw_enemy_squares(win)
+        piece = Piece(col, row, WHITE) #Cambiarle el color
+        piece.draw(win)
         
     def make_enemys(self, win):
         for row in range(ROWS):
@@ -254,7 +258,14 @@ class Board:
                 if flag == 1:
                     piece = Piece(col, row, WHITE)
                     piece.draw(win)
-        
+    
+    def draw_on_enemyboard(self, win):
+        for row in range(ROWS):
+            for col in range(COLS):
+                flag = self.enemy_board[col][row]
+                if flag == 2:
+                    piece = Piece(col, row, BLACK)
+                    piece.select_draw(win)
     
    
                     
@@ -292,6 +303,11 @@ class Piece: #Esta clase tiene que ser modificada para despues trabajar con los 
         radius = SQUARE_SIZE//2 - self.PADDING 
         pygame.draw.circle(win, self.color, (750 + self.x, self.y), radius)
         pygame.draw.circle(win, GREY, (750 + self.x, self.y), radius + self.OUTLINE) #Esto seria en el caso de los enemigos
+    
+    def select_draw(self, win):
+        radius = SQUARE_SIZE//2 - self.PADDING 
+        pygame.draw.circle(win, self.color, (self.x, self.y), radius)
+        pygame.draw.circle(win, BLACK, (self.x, self.y), radius + self.OUTLINE) #Esto seria en el caso de los enemigos
     
     def draw_enemy(self, win):
         radius = SQUARE_SIZE//2 - self.PADDING 
