@@ -233,6 +233,8 @@ def Play_Game(cursor):
     #if keys_pressed[pygame.K_e]:
     if ImPlaying == False:
         print("Juega el enemigo")
+        board.random_enemy(WIN)
+        
         ImPlaying = True
         
     pygame.display.update()

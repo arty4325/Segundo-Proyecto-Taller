@@ -20,6 +20,8 @@ BLACK = (0,206,209)
 BLUE = (0, 0, 255) 
 GREY = (128, 128, 128)
 
+REALBLACK = (0, 0, 255)
+
 
 def CreateBoards(Bool, User, Boats):
     global THEBOARD, ENEMYBOARD
@@ -205,8 +207,8 @@ def SafeBoards(User):
         SAVE.write(str(ENEMYBOARD[i]) + "\n")
     
                 
-        
-        
+
+    
     
 class Board:
     def __init__(self):
@@ -231,10 +233,10 @@ class Board:
     def draw_boat(self, row, col, win):
         self.board[col][row] = 1
         #print(self.board, row, col)
-        self.draw_squares(win)
+        #self.draw_squares(win)
         #print(self.board)
-        piece = Piece(col, row, WHITE)
-        piece.draw(win)
+        #piece = Piece(col, row, WHITE)
+        #piece.draw(win)
    
     
     
@@ -246,10 +248,18 @@ class Board:
         self.draw_enemy_squares(win)
         
     def draw_selected_notkilled_boat(self, row, col, win):
-        self.enemy_board[col][row] = 2 #Esto se usa cuando uno dispara a una casilla en la cual no hay un bote
-        self.draw_enemy_squares(win)
-        piece = Piece(col, row, WHITE) #Cambiarle el color
-        piece.draw(win)
+        flag = self.enemy_board[col][row] 
+        if flag == 0:
+            self.enemy_board[col][row] = 2 #Esto significa que se selecciono una casilla en la que no habia enemigo 
+        if flag == 1:
+            self.enemy_board[col][row] = 3 #Esto significa que se selecciono una casilla en la que HABIA enemigo
+        
+        #self.enemy_board[col][row] = 2 
+        #Esto se usa cuando uno dispara a una casilla en la cual no hay un bote
+        #la idea en esto es que primero lea que es lo que hay y despues tome la desicion de lo que se esta haciendo
+        #self.draw_enemy_squares(win)
+        #piece = Piece(col, row, WHITE) #Cambiarle el color
+        #piece.draw(win)
         
     def make_enemys(self, win):
         for row in range(ROWS):
@@ -258,6 +268,12 @@ class Board:
                 if flag == 1:
                     piece = Piece(col, row, WHITE)
                     piece.draw(win)
+                elif flag == 2:
+                    piece = Piece(col, row, REALBLACK)
+                    piece.enemy_selection(win, (0, 255, 0))
+                elif flag == 3:
+                    piece = Piece(col, row, REALBLACK)
+                    piece.enemy_selection(win, (255, 0, 0))
     
     def draw_on_enemyboard(self, win):
         for row in range(ROWS):
@@ -265,9 +281,20 @@ class Board:
                 flag = self.enemy_board[col][row]
                 if flag == 2:
                     piece = Piece(col, row, BLACK)
-                    piece.select_draw(win)
+                    piece.select_draw(win, (0, 0, 255))
+                if flag == 3:
+                    piece = Piece(col, row, BLACK)
+                    piece.select_draw(win, (255, 0, 0))
+                    
     
-   
+    def random_enemy(self, win):
+        row = random.choice([0,1,2,3,4,5,6,7,8,9])
+        col = random.choice([0,1,2,3,4,5,6,7,8,9])
+        flag = self.board[col][row]
+        if flag == 0:
+            self.board[col][row] = 2 #Este 2 significa que en MI tablero el enemigo selecciono una casilla en donde NO habia barco
+        if flag == 1:
+            self.board[col][row] = 3 #Este 3 significa que MI tablero, el enemigo slecciono una casilla en donde HABIA un barco
                     
     #def create_board(self): #Se agregan piezas
 
@@ -303,11 +330,16 @@ class Piece: #Esta clase tiene que ser modificada para despues trabajar con los 
         radius = SQUARE_SIZE//2 - self.PADDING 
         pygame.draw.circle(win, self.color, (750 + self.x, self.y), radius)
         pygame.draw.circle(win, GREY, (750 + self.x, self.y), radius + self.OUTLINE) #Esto seria en el caso de los enemigos
+        
+    def enemy_selection(self, win, selcol):
+        radius = SQUARE_SIZE//2 - self.PADDING
+        #pygame.draw.circle(win, self.color, (750 + self.x, self.y), radius)
+        pygame.draw.circle(win, selcol, (750 + self.x, self.y), radius + self.OUTLINE)
     
-    def select_draw(self, win):
+    def select_draw(self, win, selcol):
         radius = SQUARE_SIZE//2 - self.PADDING 
         pygame.draw.circle(win, self.color, (self.x, self.y), radius)
-        pygame.draw.circle(win, BLACK, (self.x, self.y), radius + self.OUTLINE) #Esto seria en el caso de los enemigos
+        pygame.draw.circle(win, selcol, (self.x, self.y), radius + self.OUTLINE) #Esto seria en el caso de los enemigos
     
     def draw_enemy(self, win):
         radius = SQUARE_SIZE//2 - self.PADDING 
