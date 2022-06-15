@@ -250,7 +250,7 @@ class Board:
     def draw_selected_notkilled_boat(self, row, col, win):
         flag = self.enemy_board[col][row] 
         if flag == 0:
-            self.enemy_board[col][row] = 2 #Esto significa que se selecciono una casilla en la que no habia enemigo 
+            self.enemy_board[col][row] = 2 #Esto significa que se selecciono una casilla en la que no habia enemigo
         if flag == 1:
             self.enemy_board[col][row] = 3 #Esto significa que se selecciono una casilla en la que HABIA enemigo
         
@@ -295,8 +295,13 @@ class Board:
             self.board[col][row] = 2 #Este 2 significa que en MI tablero el enemigo selecciono una casilla en donde NO habia barco
         if flag == 1:
             self.board[col][row] = 3 #Este 3 significa que MI tablero, el enemigo slecciono una casilla en donde HABIA un barco
+            Board.random_enemy(self, win)
+        if flag == 2 or flag == 3:
+            Board.random_enemy(self, win)
                     
     #def create_board(self): #Se agregan piezas
+    def return_what_i_selected(self, row, col):
+        return self.enemy_board[col][row]
 
 
 class Piece: #Esta clase tiene que ser modificada para despues trabajar con los barcos 

@@ -77,8 +77,25 @@ def Check_Rotated():
     time.sleep(0.1)
     Check_Rotated()
 
-
- 
+#def label_error():
+#    window = tk.Tk()
+#    window.title("Fallo")
+#    window.minsize(150, 70)
+#    window.resizable(False, False)
+    
+#    Inicio = tk.Canvas(window, width = 700, height = 700)
+#    Inicio.place(x = 0, y = 0)
+    
+    #time.sleep(1)
+    
+    #window.destroy()
+    #Inicio.delete("all")
+    
+#    window.mainloop()
+#def destroy_windows(window, Inicio):
+#    window.destroy()
+#    Inicio.delete("all")
+    
     
 #if keys_pressed[pygame.K_q]:
 #print(cursor.x, cursor.y) #la idea es que esto modifique la matriz cuando se selecciona
@@ -227,8 +244,33 @@ def Play_Game(cursor):
                 cursor.y += 70
         if keys_pressed[pygame.K_q]:
             print((cursor.x - 750)//70, (cursor.y%750)//70) #la idea es que esto modifique la matriz cuando se selecciona
-            board.draw_selected_notkilled_boat((cursor.x - 750)//70, (cursor.y%750)//70, WIN)
-            ImPlaying = False
+            val = board.return_what_i_selected((cursor.x - 750)//70, (cursor.y%750)//70)
+            print(val)
+            if val == 0 or val == 1:
+                board.draw_selected_notkilled_boat((cursor.x - 750)//70, (cursor.y%750)//70, WIN)
+                
+            #Se puede hacer lo de la ventana de fallaste aqui con un if val == 0 :) 
+            if val == 0:
+                window = tk.Tk()
+                window.title("Fallo")
+                window.minsize(150, 70)
+                window.resizable(False, False)
+                
+                Inicio = tk.Canvas(window, width = 150, height = 70)
+                Inicio.place(x = 0, y = 0)
+                
+                window.mainloop()
+                
+                time.sleep(1)
+                
+                window.destroy()
+                Inicio.delete("all")
+                
+            
+            
+            #Si le atina esto tiene que continuar
+            if val == 0:
+                ImPlaying = False
         #board.draw_boat((cursor.x - 750)//70, (cursor.y%750)//70, WIN)
     #if keys_pressed[pygame.K_e]:
     if ImPlaying == False:
