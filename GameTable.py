@@ -14,7 +14,19 @@ import time
 
 from FuncionesArturo import Board
 
-import pyfirmata 
+import pyfirmata
+import keyboard
+import time
+
+board = pyfirmata.Arduino('COM4')   #Find the port from arduino ide
+
+it = pyfirmata.util.Iterator(board)
+it.start()
+
+w_pin=board.get_pin('d:9:i')
+a_pin=board.get_pin('d:11:i')
+s_pin=board.get_pin('d:8:i')
+d_pin=board.get_pin('d:10:i')
 
 
 global run 
@@ -275,6 +287,32 @@ def main():
     global run
     clock = pygame.time.Clock()
     while run:
+        time.sleep(0.1)
+        d = d_pin.read()
+        s = s_pin.read()
+        a = a_pin.read()
+        w = w_pin.read()
+        print(d, s, a, w)
+    
+        if w == True:
+            keyboard.press("w")
+        elif w == False:
+            keyboard.release("w")
+        
+        if a == True:
+            keyboard.press("a")
+        elif a == False:
+            keyboard.release("a")
+        
+        if s == True:
+            keyboard.press("s")
+        elif s == False:
+            keyboard.release("s")
+        
+        if d == True:
+            keyboard.press("d")
+        elif d == False:
+            keyboard.release("d")
         clock.tick(FPS)
         if NotPlaying and (CantBoats[0] != 0 or CantBoats[1] != 0 or CantBoats[2] != 0):
             if CantBoats[0] != 0:
