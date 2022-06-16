@@ -195,7 +195,26 @@ def CreateBoards(Bool, User, Boats):
         BOARDS.close()
     #print(THEBOARD, ENEMYBOARD)
 
-
+def check_the_board():
+    IWinFlag = False
+    EnemyWinFlag = False
+    CountMyBoats = 0
+    for i in range(10):
+        for k in range(10):
+            if THEBOARD[i][k] == 1:
+                CountMyBoats += 1
+    CountEnemyBoats = 0
+    for w in range(10):
+        for r in range(10):
+            if ENEMYBOARD[w][r] == 1:
+                CountEnemyBoats += 1
+    if CountMyBoats == 0:
+        EnemyWinFlag = True
+    if CountEnemyBoats == 0:
+        IWinFlag = True
+        
+    return IWinFlag, EnemyWinFlag
+        
 
 
 def SafeBoards(User):

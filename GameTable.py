@@ -14,6 +14,8 @@ import time
 
 from FuncionesArturo import Board
 
+import pyfirmata 
+
 
 global run 
 global WIN
@@ -76,31 +78,6 @@ def Check_Rotated():
         
     time.sleep(0.1)
     Check_Rotated()
-
-#def label_error():
-#    window = tk.Tk()
-#    window.title("Fallo")
-#    window.minsize(150, 70)
-#    window.resizable(False, False)
-    
-#    Inicio = tk.Canvas(window, width = 700, height = 700)
-#    Inicio.place(x = 0, y = 0)
-    
-    #time.sleep(1)
-    
-    #window.destroy()
-    #Inicio.delete("all")
-    
-#    window.mainloop()
-#def destroy_windows(window, Inicio):
-#    window.destroy()
-#    Inicio.delete("all")
-    
-    
-#if keys_pressed[pygame.K_q]:
-#print(cursor.x, cursor.y) #la idea es que esto modifique la matriz cuando se selecciona
-#    board.draw_boat((cursor.x - 750)//70, (cursor.y%750)//70, WIN)
-#if keys_pressed[pygame.K_e]:
 
 def draw_boats(barco2, barco3, barco4, selected):
     global HaveRotated
@@ -226,6 +203,7 @@ def draw_window():
 
 def Play_Game(cursor):
     global ImPlaying #Esta variable dicta si yo estoy jugando o si esta jugando mi enemigo lets go 
+    global run
     WIN.blit(Cursor, (cursor.x, cursor.y))
     
     keys_pressed = pygame.key.get_pressed()
@@ -250,25 +228,12 @@ def Play_Game(cursor):
                 board.draw_selected_notkilled_boat((cursor.x - 750)//70, (cursor.y%750)//70, WIN)
                 
             #Se puede hacer lo de la ventana de fallaste aqui con un if val == 0 :) 
-            if val == 0:
-                window = tk.Tk()
-                window.title("Fallo")
-                window.minsize(150, 70)
-                window.resizable(False, False)
-                
-                Inicio = tk.Canvas(window, width = 150, height = 70)
-                Inicio.place(x = 0, y = 0)
-                
-                window.mainloop()
-                
-                time.sleep(1)
-                
-                window.destroy()
-                Inicio.delete("all")
-                
-            
-            
             #Si le atina esto tiene que continuar
+            HaveIWon, HaveEnemyWon = FuncionesArturo.check_the_board()
+            #print(HaveIWon, HaveEnemyWon)
+            if HaveIWon or HaveEnemyWon: #Cuando yo o el enemigo ganaron
+                run = False
+                
             if val == 0:
                 ImPlaying = False
         #board.draw_boat((cursor.x - 750)//70, (cursor.y%750)//70, WIN)
@@ -276,6 +241,11 @@ def Play_Game(cursor):
     if ImPlaying == False:
         print("Juega el enemigo")
         board.random_enemy(WIN)
+        
+        HaveIWon, HaveEnemyWon = FuncionesArturo.check_the_board()
+        
+        if HaveIWon or HaveEnemyWon:
+            run = False 
         
         ImPlaying = True
         
@@ -291,6 +261,7 @@ def main():
     global barco2, barco3, barco4
     global NotPlaying
     global CantBoats
+    global run
     Thread(target = Check_Rotated, args = ()).start()
     cursor = pygame.Rect(750, 70, 70, 70)
     barco2 = pygame.Rect(750, -280, 140, 70)
