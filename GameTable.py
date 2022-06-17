@@ -70,7 +70,6 @@ def RunGame(TheUser, CBoats, Matrix, Bool):
 
 
 
-
         
     
     
@@ -272,7 +271,6 @@ def Play_Game(cursor):
                 
             #print(HaveIWon, HaveEnemyWon)
             if HaveIWon or HaveEnemyWon: #Cuando yo o el enemigo ganaron
-                
                 run = False
                 
             if val == 0:

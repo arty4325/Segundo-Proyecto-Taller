@@ -40,10 +40,6 @@ def PantallaInicial(window, Inicio):
     Background = ImageTk.PhotoImage(file = "Images/BegginningLogo.png")
     Inicio.create_image(50, 0, image = Background, anchor = "nw")
     
-    
-    
-    
-    
     # Se quiere crear una serie de botones
     # 1) Boton de Inicio de Sesion (Username and Cant - Naves)
     # 2) Boton de jugar partida guardada 
