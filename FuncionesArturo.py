@@ -10,6 +10,10 @@ import os #Esta libreria se usa para obtener las imagenes del sistema operativo
 import random 
 # Funciones arturo :)
 
+
+
+
+
 WIDTH, HEIGHT = 1450, 700 #Tamaño de la pantalla 
 ROWS, COLS = 10, 10
 SQUARE_SIZE = 700//COLS

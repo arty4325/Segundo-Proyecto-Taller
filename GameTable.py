@@ -18,15 +18,22 @@ import pyfirmata
 import keyboard
 import time
 
-board = pyfirmata.Arduino('COM4')   #Find the port from arduino ide
+ProtoBoard = pyfirmata.Arduino('COM4')   #Find the port from arduino ide
 
-it = pyfirmata.util.Iterator(board)
+it = pyfirmata.util.Iterator(ProtoBoard)
 it.start()
 
-w_pin=board.get_pin('d:9:i')
-a_pin=board.get_pin('d:11:i')
-s_pin=board.get_pin('d:8:i')
-d_pin=board.get_pin('d:10:i')
+w_pin=ProtoBoard.get_pin('d:10:i')
+a_pin=ProtoBoard.get_pin('d:8:i')
+s_pin=ProtoBoard.get_pin('d:11:i')
+d_pin=ProtoBoard.get_pin('d:9:i')
+e_pin=ProtoBoard.get_pin('d:13:i')
+q_pin=ProtoBoard.get_pin('d:12:i')
+
+def TurnOnLight(pin, board):
+    board.digital[pin].write(1)
+    time.sleep(1)
+    board.digital[pin].write(0)
 
 
 global run 
@@ -236,12 +243,19 @@ def Play_Game(cursor):
             print((cursor.x - 750)//70, (cursor.y%750)//70) #la idea es que esto modifique la matriz cuando se selecciona
             val = board.return_what_i_selected((cursor.x - 750)//70, (cursor.y%750)//70)
             print(val)
+            if val == 0:
+                Thread(target = TurnOnLight, args = (2, ProtoBoard, )).start()
+            if val == 1:
+                Thread(target = TurnOnLight, args = (3, ProtoBoard, )).start()
+            
             if val == 0 or val == 1:
                 board.draw_selected_notkilled_boat((cursor.x - 750)//70, (cursor.y%750)//70, WIN)
                 
             #Se puede hacer lo de la ventana de fallaste aqui con un if val == 0 :) 
             #Si le atina esto tiene que continuar
             HaveIWon, HaveEnemyWon = FuncionesArturo.check_the_board()
+            if HaveIWon:
+                Thread(target = TurnOnLight, args = (4, ProtoBoard, )).start()
             #print(HaveIWon, HaveEnemyWon)
             if HaveIWon or HaveEnemyWon: #Cuando yo o el enemigo ganaron
                 run = False
@@ -288,12 +302,15 @@ def main():
     clock = pygame.time.Clock()
     while run:
         time.sleep(0.1)
+        
         d = d_pin.read()
         s = s_pin.read()
         a = a_pin.read()
         w = w_pin.read()
-        print(d, s, a, w)
-    
+        e = e_pin.read()
+        q = q_pin.read()
+        print(d, s, a, w, e, q)
+        
         if w == True:
             keyboard.press("w")
         elif w == False:
@@ -313,6 +330,17 @@ def main():
             keyboard.press("d")
         elif d == False:
             keyboard.release("d")
+            
+        if q == True:
+            keyboard.press("q")
+        elif q == False:
+            keyboard.release("q")
+            
+        if e == True:
+            keyboard.press("e")
+        elif e == False:
+            keyboard.release("e")
+        
         clock.tick(FPS)
         if NotPlaying and (CantBoats[0] != 0 or CantBoats[1] != 0 or CantBoats[2] != 0):
             if CantBoats[0] != 0:
