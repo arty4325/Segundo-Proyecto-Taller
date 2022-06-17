@@ -48,8 +48,8 @@ def PantallaInicial(window, Inicio):
     """
     global temp
     Inicio.configure(background = '#3885BD') #Se le pone un fondo de pantalla al tkinter
-    Background = ImageTk.PhotoImage(file = "Images/BegginningLogo.png")
-    Inicio.create_image(50, 0, image = Background, anchor = "nw") 
+    Background = ImageTk.PhotoImage(file = "Images/menulindo.png")
+    Inicio.create_image(0, 0, image = Background, anchor = "nw") 
     
     def InicSecion(): #Botonde inicio de secion 
         Inicio.delete("all") 
@@ -65,6 +65,7 @@ def PantallaInicial(window, Inicio):
     def About(): #Abre la pantalla about 
         Inicio.delete("all")
         labelDest(temp)
+        about_window(window, Inicio)
         
         
     def SalonFama(): #Funcion que permite ir al salon de la fama 
@@ -107,6 +108,9 @@ def PantallaInicial(window, Inicio):
     
 
 def RankingWindow(window, Inicio): #Funcion del raking 
+    Background = ImageTk.PhotoImage(file = "Images/rankingmeny.png")
+    Inicio.create_image(0, 0, image = Background, anchor = "nw")
+    
     global TimeDisplaying
     TimeRanking = open("RankingByTime.txt", "r") #Se lee el archivo txt que orena por ranking
     TimeRankingList = TimeRanking.readlines()
@@ -287,29 +291,32 @@ def RankingWindow(window, Inicio): #Funcion del raking
                 ElevenPlace = tk.Label(Inicio, text = Names[9] + Times[9], font = ("Arial", 20), background = "#4A1798")
                 ElevenPlace.place(x = 350, y = 550, anchor = "nw")
                 temp.append(ElevenPlace)
+        
                 
-        TimeDisplaying = not TimeDisplaying #Se invierte la variable depsue sdel cambio 
+        TimeDisplaying = not TimeDisplaying #Se invierte la variable depsue sdel cambio
+    
+        
+    def ReturnButton():
+        Inicio.delete("all")
+        labelDest(temp)
+        PantallaInicial(window, Inicio)
+        
+    
+    ReturnB = tk.Button(Inicio, command = ReturnButton, text = "Return")
+    ReturnB.place(x = 170, y = 600, anchor = "nw")
+    temp.append(ReturnB)
     
     
     
     Change_button = tk.Button(Inicio, command = change_label, text = "Cambiar de Ranking") #Se coloca el boton en la pantalla 
     Change_button.place(x = 200, y = 100, anchor = "nw")
-            
-    
-    
-    
-    
-    
-        
-    
-                
-    
-
+    temp.append(Change_button)
+    window.mainloop()
 
 def NewAccountWindow(window, Inicio): #Esta variable permite crear una nueva cuenta 
     
-    Background = ImageTk.PhotoImage(file = "Images/BegginningLogo.png") #Se pone un fondo 
-    Inicio.create_image(50, 0, image = Background, anchor = "nw")
+    Background = ImageTk.PhotoImage(file = "Images/menulindo.png") #Se pone un fondo 
+    Inicio.create_image(0, 0, image = Background, anchor = "nw")
     
     UserEntry = tk.Entry(Inicio, width = 10, font = ("Helvetica", 50)) #Se coloca el entry para oclocar elnombre de usuario 
     UserEntry.place(x = 170, y = 300, anchor = "nw")
@@ -323,6 +330,11 @@ def NewAccountWindow(window, Inicio): #Esta variable permite crear una nueva cue
     SmallBoats = tk.Entry(Inicio, width = 4, font = ("Helvetica", 30)) #Se coloca el entry para colocar los barcos pequeñso
     SmallBoats.place(x = 500, y = 450, anchor = "nw")
     
+    temp.append(UserEntry)
+    temp.append(BigBoats)
+    temp.append(MediumBoats)
+    temp.append(SmallBoats)
+    
     def UserLoad(): #Se crea el boton que carga todos los entrys 
         nonlocal UserEntry, BigBoats, MediumBoats, SmallBoats
         User = UserEntry.get()
@@ -335,36 +347,77 @@ def NewAccountWindow(window, Inicio): #Esta variable permite crear una nueva cue
         FuncionesArturo.CreateBoards(True, User, [int(BBoats), int(MBoats), int(SBoats)])
         GameTable.RunGame(User, [int(BBoats), int(MBoats), int(SBoats)], [], True)  #Se convierte todo a numeros 
         #Enteros y se llama a la ventana de pygame 
+    
+    def ReturnButton():
+        Inicio.delete("all")
+        labelDest(temp)
+        PantallaInicial(window, Inicio)
         
+    
+    ReturnB = tk.Button(Inicio, command = ReturnButton, text = "Return")
+    ReturnB.place(x = 170, y = 600, anchor = "nw")
         
     UserButton = tk.Button(Inicio, command = UserLoad, text = "Nombre de usuario") #Boton para colocar el nombre de usuario 
     UserButton.place(x = 170, y = 390, anchor = "nw") # Se coloca el boton del nombre de usuario 
+    
+    temp.append(ReturnB)
+    temp.append(UserButton)
+    
+    window.mainloop()
+
+def about_window(window, Inicio):
+    Background = ImageTk.PhotoImage(file = "Images/casi.png")
+    Inicio.create_image(0, 0, image = Background, anchor = "nw") 
+    
+    
+    
+    def ReturnButton():
+        Inicio.delete("all")
+        labelDest(temp)
+        PantallaInicial(window, Inicio)
+        
+    
+    ReturnB = tk.Button(Inicio, command = ReturnButton, text = "Return")
+    ReturnB.place(x = 170, y = 600, anchor = "nw")
+    temp.append(ReturnB)
     
     
     window.mainloop()
 
 def OldAccountWindow(window, Inicio):#Ventana de tkinter que permite cargar un usuario antiguo 
     
-    Background = ImageTk.PhotoImage(file = "Images/BegginningLogo.png") #Se carga el fondo de pantalla
-    Inicio.create_image(50, 0, image = Background, anchor = "nw") 
+    Background = ImageTk.PhotoImage(file = "Images/menulindo.png") #Se carga el fondo de pantalla
+    Inicio.create_image(0, 0, image = Background, anchor = "nw") 
     
     UserEntry = tk.Entry(Inicio, width = 10, font = ("Helvetica", 50)) #Se crea el entry en donde se coloca el nombre de usuario 
     UserEntry.place(x = 170, y = 300, anchor = "nw")
+    
+    temp.append(UserEntry)
 
     
-    def UserLoad(): #SE crea la funcion para el boton para cargar el nombre de usuario 
+    def UserLoad(): #Se crea la funcion para el boton para cargar el nombre de usuario 
         nonlocal UserEntry
         User = UserEntry.get()
         window.destroy()
         FuncionesArturo.CreateBoards(False, User,[])
         GameTable.RunGame(User, [0,0,0], [], False) #Se llama al juego 
         
+    def ReturnButton():
+        Inicio.delete("all")
+        labelDest(temp)
+        PantallaInicial(window, Inicio)
+        
+    
+    ReturnB = tk.Button(Inicio, command = ReturnButton, text = "Return")
+    ReturnB.place(x = 170, y = 600, anchor = "nw")
+    temp.append(ReturnB)
         
         
         
         
     UserButton = tk.Button(Inicio, command = UserLoad, text = "Nombre de usuario") #boton para el nombre de usuario 
     UserButton.place(x = 170, y = 390, anchor = "nw") #Boton para el nombre de usuario
+    temp.append(UserButton)
     
     
     window.mainloop()

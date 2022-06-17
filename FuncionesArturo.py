@@ -1,7 +1,5 @@
 """
-Created on Sat Jun  4 11:19:30 2022
-
-@author: RYZEN
+Modulo de Funciones varias
 """
 
 import pygame #Se va a hacer uso de pygame para programar el juego
@@ -10,7 +8,7 @@ import random
 import time
 from threading import Thread
 import tkinter as tk
-# Funciones arturo :)
+
 
 
 

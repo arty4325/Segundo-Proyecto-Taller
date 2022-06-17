@@ -18,6 +18,11 @@ import pyfirmata
 import keyboard
 import time
 
+pygame.mixer.init()
+# if you want to use this module.
+pygame.mixer.music.load('morse-code-alphabet.ogg')
+pygame.mixer.music.play()
+
 ProtoBoard = pyfirmata.Arduino('COM4')   #Se establece cual es el pin en el cual esta funcionando el arduino 
 
 it = pyfirmata.util.Iterator(ProtoBoard) #Se itera en la lectura del arduino 
