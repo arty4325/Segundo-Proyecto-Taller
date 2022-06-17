@@ -70,23 +70,7 @@ def RunGame(TheUser, CBoats, Matrix, Bool):
 
 
 
-def Error_window():
-    window = tk.Tk()
-    window.title("Fallaste")
-    window.minsize(100, 100)
-    window.resizable(False, False)
-    
-    Inicio = tk.Canvas(window, width = 100, height = 100)
-    Inicio.place(x = 0, y = 0)
-    
-    def destroy_window(window):
-        window.destroy()
-    
-    time.sleep(0.5)
-    
-    destroy_window(window)
-    
-    window.mainloop()
+
         
     
     

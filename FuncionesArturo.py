@@ -419,11 +419,7 @@ def build_podium(user):
             UserTimeName.append(RankingTimeList[i][0:-1])
         else:
             UserTimeTime.append(int(RankingTimeList[len(RankingTimeList) - 1]))
-    RankingTime.close()
-    RankingTime = open('RankingByTime.txt', 'w')
-    RankingTime.write(user + "\n")
-    RankingTime.write(str(seconds))
-    RankingTime.close()
+
     
     
     
@@ -463,6 +459,18 @@ def build_podium(user):
     for i in RankedTimeTime:
         IndexVal = UserTimeName[UserTimeTime.index(i)]
         RankedTimeNames.append(IndexVal)
+        
+    RankingTime.close()
+    print(RankedTimeTime, RankedTimeNames)
+    
+    RankingTimeWrite = open('RankingByTime.txt', 'w+')
+    
+    for i in range(len(RankedTimeTime) - 1):
+    
+        RankingTimeWrite.write(RankedTimeNames[i] + "\n")
+        RankingTimeWrite.write(str(RankedTimeTime[i]) + "\n")
+    
+    RankingTimeWrite.close()
         
     return RankedTimeTime, RankedTimeNames
     
