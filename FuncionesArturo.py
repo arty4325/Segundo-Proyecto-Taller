@@ -8,6 +8,8 @@ Created on Sat Jun  4 11:19:30 2022
 import pygame #Se va a hacer uso de pygame para programar el juego
 import os #Esta libreria se usa para obtener las imagenes del sistema operativo 
 import random 
+import time
+from threading import Thread
 # Funciones arturo :)
 
 
@@ -26,9 +28,19 @@ GREY = (128, 128, 128)
 
 REALBLACK = (0, 0, 255)
 
+global seconds 
+seconds = None
+
+
+def clock():
+    global seconds 
+    print(seconds)
+    seconds = seconds + 1
+    time.sleep(1)
+    return clock()
 
 def CreateBoards(Bool, User, Boats):
-    global THEBOARD, ENEMYBOARD
+    global THEBOARD, ENEMYBOARD, seconds
     
     def choose_enemys(boat, matriz, ret):
         ret = matriz
@@ -138,6 +150,7 @@ def CreateBoards(Bool, User, Boats):
     
     
     if Bool:
+        seconds = 0
         THEBOARD = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
@@ -180,7 +193,7 @@ def CreateBoards(Bool, User, Boats):
     
 
         
-    if not Bool:
+    if not Bool: 
         BOARDS = open(User + ".txt", "r")
         THEBOARD = []
         ENEMYBOARD = []
@@ -196,8 +209,14 @@ def CreateBoards(Bool, User, Boats):
             for k in Var[1:-2]:
                 if k != "," and k != " ":
                     ENEMYBOARD[i].append(int(k))
+        alreadyplayedtime = BOARDS.readline()
+        seconds = int(alreadyplayedtime)
+        print(seconds)
         BOARDS.close()
+    print(seconds)
+    Thread(target = clock, args = ()).start()
     #print(THEBOARD, ENEMYBOARD)
+
 
 def check_the_board():
     IWinFlag = False
@@ -222,12 +241,16 @@ def check_the_board():
 
 
 def SafeBoards(User):
-    global THEBOARD, ENEMYBOARD
+    global THEBOARD, ENEMYBOARD, seconds
     SAVE = open(User + ".txt", "w+")
     for i in range(10):
         SAVE.write(str(THEBOARD[i]) + "\n")
     for i in range(10):
         SAVE.write(str(ENEMYBOARD[i]) + "\n")
+    SAVE.write(str(seconds))
+    print(seconds)
+    
+
     
                 
 
@@ -377,6 +400,86 @@ class Piece: #Esta clase tiene que ser modificada para despues trabajar con los 
     def __repr__(self):
          return str(self.color)
 
+
+def build_podium(user):
+    #Para este momento yo YA gane el juego
+    #Quiero hacer dos listas, rnakingbytime y rankingbyname 
+    global seconds
+    UserTimeTime = []
+    UserTimeName = []
+    UserTimeTime.append(seconds)
+    UserTimeName.append(user)
+    
+    RankingTime = open("RankingByTime.txt", "r")
+    RankingTimeList = RankingTime.readlines()
+    for i in range(len(RankingTimeList)):
+        if i%2 == 1 and i != len(RankingTimeList) - 1:
+            UserTimeTime.append(int(RankingTimeList[i][0:-1]))
+        elif i%2 == 0:
+            UserTimeName.append(RankingTimeList[i][0:-1])
+        else:
+            UserTimeTime.append(int(RankingTimeList[len(RankingTimeList) - 1]))
+    RankingTime.close()
+    RankingTime = open('RankingByTime.txt', 'w')
+    RankingTime.write(user + "\n")
+    RankingTime.write(str(seconds))
+    RankingTime.close()
+    
+    
+    
+    
+    
+    
+    
+    def quick_sort(Lista):
+        #Autor: Milton
+        Menores = []
+        Iguales = []
+        Mayores = []
+        if len(Lista) <= 1:
+            return Lista
+        Pivote = Lista[-1]
+        partir(Lista, 0, len(Lista), Pivote, Menores, Iguales, Mayores)
+        Ret = quick_sort(Menores)
+        Ret.extend(Iguales) #Extiendelo con esta otra lista
+        Ret.extend(quick_sort(Mayores))
+        return Ret
+
+    def partir(Lista, i, n, Pivote, Menores, Iguales, Mayores):
+        #Autor: Milton
+        if i == n:
+            return Menores, Iguales, Mayores
+        if Lista[i] < Pivote:
+            Menores.append(Lista[i])
+        elif Lista[i] > Pivote:
+            Mayores.append(Lista[i])
+        elif Lista[i] == Pivote:
+            Iguales.append(Lista[i])
+        return partir(Lista, i + 1,n, Pivote, Menores, Iguales, Mayores)
+    
+    RankedTimeTime = quick_sort(UserTimeTime)
+    RankedTimeNames = []
+    
+    for i in RankedTimeTime:
+        IndexVal = UserTimeName[UserTimeTime.index(i)]
+        RankedTimeNames.append(IndexVal)
+        
+    return RankedTimeTime, RankedTimeNames
+    
+    
+            
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
      
 
 

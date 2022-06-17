@@ -79,7 +79,7 @@ def PantallaInicial(window, Inicio):
     def Exit():
         labelDest(temp)
         window.destroy()
-        Inicio.delete("all")
+        #Inicio.delete("all")
         
         
     InicButton = tk.Button(Inicio, command = InicSecion, text = "Login")
@@ -118,12 +118,26 @@ def NewAccountWindow(window, Inicio):
     UserEntry = tk.Entry(Inicio, width = 10, font = ("Helvetica", 50))
     UserEntry.place(x = 170, y = 300, anchor = "nw")
     
+    BigBoats = tk.Entry(Inicio, width = 4, font = ("Helvetica", 30))
+    BigBoats.place(x = 75, y = 450, anchor = "nw")
+    
+    MediumBoats = tk.Entry(Inicio, width = 4, font = ("Helvetica", 30))
+    MediumBoats.place(x = 275, y = 450, anchor = "nw")
+    
+    SmallBoats = tk.Entry(Inicio, width = 4, font = ("Helvetica", 30))
+    SmallBoats.place(x = 500, y = 450, anchor = "nw")
+    
     def UserLoad():
-        nonlocal UserEntry
+        nonlocal UserEntry, BigBoats, MediumBoats, SmallBoats
         User = UserEntry.get()
+        BBoats = BigBoats.get()
+        MBoats = MediumBoats.get()
+        SBoats = SmallBoats.get()
+        
+        
         window.destroy()
-        FuncionesArturo.CreateBoards(True, User, [3,3,3])
-        GameTable.RunGame(User, [3,3,3], [], True) 
+        FuncionesArturo.CreateBoards(True, User, [int(BBoats), int(MBoats), int(SBoats)])
+        GameTable.RunGame(User, [int(BBoats), int(MBoats), int(SBoats)], [], True) 
         # grandes , medianos , pequeños 
         
         

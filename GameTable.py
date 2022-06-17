@@ -53,6 +53,7 @@ WIN = None
 
 from FuncionesArturo import WIDTH, HEIGHT 
 
+
 def RunGame(TheUser, CBoats, Matrix, Bool):
     global ImPlaying 
     if Bool == False:
@@ -69,6 +70,28 @@ def RunGame(TheUser, CBoats, Matrix, Bool):
 
 
 
+def Error_window():
+    window = tk.Tk()
+    window.title("Fallaste")
+    window.minsize(100, 100)
+    window.resizable(False, False)
+    
+    Inicio = tk.Canvas(window, width = 100, height = 100)
+    Inicio.place(x = 0, y = 0)
+    
+    def destroy_window(window):
+        window.destroy()
+    
+    time.sleep(0.5)
+    
+    destroy_window(window)
+    
+    window.mainloop()
+        
+    
+    
+    
+    
     
     
 Cursor = pygame.image.load(os.path.join("Images", "Cursor.png"))
@@ -223,7 +246,9 @@ def draw_window():
 def Play_Game(cursor):
     global ImPlaying #Esta variable dicta si yo estoy jugando o si esta jugando mi enemigo lets go 
     global run
+    global User
     WIN.blit(Cursor, (cursor.x, cursor.y))
+    
     
     keys_pressed = pygame.key.get_pressed()
     if ImPlaying:
@@ -255,9 +280,15 @@ def Play_Game(cursor):
             #Si le atina esto tiene que continuar
             HaveIWon, HaveEnemyWon = FuncionesArturo.check_the_board()
             if HaveIWon:
+                #print(FuncionesArturo.build_podium(User))
+                Top10 = FuncionesArturo.build_podium(User)[1][0:9]
+                if User in Top10:
+                    Thread(target = TurnOnLight, args = (5, ProtoBoard, )).start()
                 Thread(target = TurnOnLight, args = (4, ProtoBoard, )).start()
+                
             #print(HaveIWon, HaveEnemyWon)
             if HaveIWon or HaveEnemyWon: #Cuando yo o el enemigo ganaron
+                
                 run = False
                 
             if val == 0:
