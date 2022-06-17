@@ -419,13 +419,6 @@ def build_podium(user):
             UserTimeName.append(RankingTimeList[i][0:-1])
         else:
             UserTimeTime.append(int(RankingTimeList[len(RankingTimeList) - 1]))
-
-    
-    
-    
-    
-    
-    
     
     def quick_sort(Lista):
         #Autor: Milton
@@ -471,6 +464,63 @@ def build_podium(user):
         RankingTimeWrite.write(str(RankedTimeTime[i]) + "\n")
     
     RankingTimeWrite.close()
+    
+    
+    
+    def insert_sort(Lista):
+        return insert_sort_aux(Lista, 1, len(Lista))
+
+    def insert_sort_aux(Lista, i, n):
+        if i == n:
+            return Lista
+        Aux = Lista[i]
+        j = incluye_orden(Lista, i, Aux)
+        Lista[j] = Aux
+        return insert_sort_aux(Lista, i + 1, n)
+    
+    def incluye_orden(Lista, j, Aux):
+        if j <= 0 or Lista[j -1] <= Aux:
+            return j
+        Lista[j] = Lista[j - 1]
+        return incluye_orden(Lista, j - 1, Aux)
+    
+    RankingName = open("RankingByName.txt", "r")
+    RankingNameList = RankingName.readlines()
+    
+    UserNameTime = []
+    UserNameName = []
+    UserNameTime.append(seconds)
+    UserNameName.append(user)
+    
+    for i in range(len(RankingNameList)):
+        if i % 2 == 1 and i != len(RankingNameList) - 1:
+            UserNameTime.append(int(RankingNameList[i][0:-1]))
+        elif i % 2 == 0:
+            UserNameName.append(RankingNameList[i][0:-1])
+        else:
+            UserNameTime.append(int(RankingNameList[len(RankingNameList) - 1]))
+    
+    NonMutedUserNameName = UserNameName[:]
+    
+    RankedNameName = insert_sort(UserNameName)
+    RankedNameTime = []
+    
+    for i in RankedNameName:
+        IndexVal = UserNameTime[NonMutedUserNameName.index(i)]
+        RankedNameTime.append(IndexVal)
+    
+    RankingName.close()
+    
+    RankingNameWrite = open("RankingByName.txt", "w+")
+    for i in range(len(RankedNameName) - 1):
+        RankingNameWrite.write(RankedNameName[i] + "\n")
+        RankingNameWrite.write(str(RankedNameTime[i]) + "\n")
+        
+    RankingNameWrite.close()
+        
+    
+    
+    
         
     return RankedTimeTime, RankedTimeNames
     

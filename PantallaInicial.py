@@ -13,6 +13,9 @@ import FuncionesArturo
 
 global IsLoaded
 
+global temp
+temp = []
+
 
 window = tk.Tk()
 window.title("Battleship")
@@ -31,13 +34,14 @@ def labelDest(List):
     
 
 def PantallaInicial(window, Inicio):
+    global temp
     Inicio.configure(background = '#3885BD')
     # Se pone el logo del juego
     Background = ImageTk.PhotoImage(file = "Images/BegginningLogo.png")
     Inicio.create_image(50, 0, image = Background, anchor = "nw")
     
     
-    temp = []
+    
     
     
     # Se quiere crear una serie de botones
@@ -75,51 +79,8 @@ def PantallaInicial(window, Inicio):
         Inicio.delete("all")
         labelDest(temp)
         #Programar el salon de la fama
-        TimeRanking = open("RankingByTime.txt", "r")
-        TimeRankingList = TimeRanking.readlines()
+        RankingWindow(window, Inicio)
         
-        Names = []
-        Times = []
-        
-        for i in range(len(TimeRankingList)):
-            if i % 2 == 0:
-                Names.append(TimeRankingList[i][0:-1])
-            elif i % 2 == 1:
-                Times.append(TimeRankingList[i][0:-1])
-          
-        print(Names, Times)
-        
-        if len(Names) >= 1:
-            FirstPlace = tk.Label(Inicio, text = Names[0] + Times[0], font = ("Arial", 20), background = "#4A1798")
-            FirstPlace.place(x = 350, y = 100, anchor = "nw")
-        if len(Names) >= 2:
-            FirstPlace = tk.Label(Inicio, text = Names[1] + Times[1], font = ("Arial", 20), background = "#4A1798")
-            FirstPlace.place(x = 350, y = 150, anchor = "nw")
-        if len(Names) >= 3:
-            FirstPlace = tk.Label(Inicio, text = Names[2] + Times[2], font = ("Arial", 20), background = "#4A1798")
-            FirstPlace.place(x = 350, y = 200, anchor = "nw")
-        if len(Names) >= 4:
-            FirstPlace = tk.Label(Inicio, text = Names[3] + Times[3], font = ("Arial", 20), background = "#4A1798")
-            FirstPlace.place(x = 350, y = 250, anchor = "nw")
-        if len(Names) >= 5:
-            FirstPlace = tk.Label(Inicio, text = Names[4] + Times[4], font = ("Arial", 20), background = "#4A1798")
-            FirstPlace.place(x = 350, y = 300, anchor = "nw")
-        if len(Names) >= 6:
-            FirstPlace = tk.Label(Inicio, text = Names[5] + Times[5], font = ("Arial", 20), background = "#4A1798")
-            FirstPlace.place(x = 350, y = 350, anchor = "nw")
-        if len(Names) >= 7:
-            FirstPlace = tk.Label(Inicio, text = Names[6] + Times[6], font = ("Arial", 20), background = "#4A1798")
-            FirstPlace.place(x = 350, y = 400, anchor = "nw")
-        if len(Names) >= 8:
-            FirstPlace = tk.Label(Inicio, text = Names[7] + Times[7], font = ("Arial", 20), background = "#4A1798")
-            FirstPlace.place(x = 350, y = 450, anchor = "nw")
-        if len(Names) >= 9:
-            FirstPlace = tk.Label(Inicio, text = Names[8] + Times[8], font = ("Arial", 20), background = "#4A1798")
-            FirstPlace.place(x = 350, y = 500, anchor = "nw")
-        if len(Names) >= 10:
-            FirstPlace = tk.Label(Inicio, text = Names[9] + Times[9], font = ("Arial", 20), background = "#4A1798")
-            FirstPlace.place(x = 350, y = 550, anchor = "nw")
-                
         
         
         
@@ -158,6 +119,206 @@ def PantallaInicial(window, Inicio):
 
 
     window.mainloop()
+    
+
+def RankingWindow(window, Inicio):
+    global TimeDisplaying
+    TimeRanking = open("RankingByTime.txt", "r")
+    TimeRankingList = TimeRanking.readlines()
+    TimeRanking.close()
+    
+    TimeDisplaying = True
+    
+    Names = []
+    Times = []
+    temp = []
+    
+    for i in range(len(TimeRankingList)):
+        if i % 2 == 0:
+            Names.append(TimeRankingList[i][0:-1])
+        elif i % 2 == 1:
+            Times.append(TimeRankingList[i][0:-1])
+          
+    print(Names, Times)
+        
+    if len(Names) >= 1:
+        FirstPlace = tk.Label(Inicio, text = Names[0] + Times[0], font = ("Arial", 20), background = "#4A1798")
+        FirstPlace.place(x = 350, y = 100, anchor = "nw")
+        temp.append(FirstPlace)
+    if len(Names) >= 2:
+        SecondPlace = tk.Label(Inicio, text = Names[1] + Times[1], font = ("Arial", 20), background = "#4A1798")
+        SecondPlace.place(x = 350, y = 150, anchor = "nw")
+        temp.append(SecondPlace)
+    if len(Names) >= 3:
+        ThirdPlace = tk.Label(Inicio, text = Names[2] + Times[2], font = ("Arial", 20), background = "#4A1798")
+        ThirdPlace.place(x = 350, y = 200, anchor = "nw")
+        temp.append(ThirdPlace)
+    if len(Names) >= 4:
+        FourthPlace = tk.Label(Inicio, text = Names[3] + Times[3], font = ("Arial", 20), background = "#4A1798")
+        FourthPlace.place(x = 350, y = 250, anchor = "nw")
+        temp.append(FourthPlace)
+    if len(Names) >= 5:
+        FifthPlace = tk.Label(Inicio, text = Names[4] + Times[4], font = ("Arial", 20), background = "#4A1798")
+        FifthPlace.place(x = 350, y = 300, anchor = "nw")
+        temp.append(FifthPlace)
+    if len(Names) >= 6:
+        SeventhPlace = tk.Label(Inicio, text = Names[5] + Times[5], font = ("Arial", 20), background = "#4A1798")
+        SeventhPlace.place(x = 350, y = 350, anchor = "nw")
+        temp.append(SeventhPlace)
+    if len(Names) >= 7:
+        EightPlace = tk.Label(Inicio, text = Names[6] + Times[6], font = ("Arial", 20), background = "#4A1798")
+        EightPlace.place(x = 350, y = 400, anchor = "nw")
+        temp.append(EightPlace)
+    if len(Names) >= 8:
+        NinthPlace = tk.Label(Inicio, text = Names[7] + Times[7], font = ("Arial", 20), background = "#4A1798")
+        NinthPlace.place(x = 350, y = 450, anchor = "nw")
+        temp.append(NinthPlace)
+    if len(Names) >= 9:
+        TenthPlace = tk.Label(Inicio, text = Names[8] + Times[8], font = ("Arial", 20), background = "#4A1798")
+        TenthPlace.place(x = 350, y = 500, anchor = "nw")
+        temp.append(TenthPlace)
+    if len(Names) >= 10:
+        ElevenPlace = tk.Label(Inicio, text = Names[9] + Times[9], font = ("Arial", 20), background = "#4A1798")
+        ElevenPlace.place(x = 350, y = 550, anchor = "nw")
+        temp.append(ElevenPlace)
+    
+    
+    
+    
+    def change_label():
+        global TimeDisplaying
+        global temp 
+        labelDest(temp)
+        temp = []
+        if TimeDisplaying == True:
+            TimeRanking = open("RankingByName.txt", "r")
+            TimeRankingList = TimeRanking.readlines()
+            TimeRanking.close()
+            
+            Names = []
+            Times = []
+            
+    
+            for i in range(len(TimeRankingList)):
+                if i % 2 == 0:
+                    Names.append(TimeRankingList[i][0:-1])
+                elif i % 2 == 1:
+                    Times.append(TimeRankingList[i][0:-1])
+        
+            if len(Names) >= 1:
+                FirstPlace = tk.Label(Inicio, text = Names[0] + Times[0], font = ("Arial", 20), background = "#4A1798")
+                FirstPlace.place(x = 350, y = 100, anchor = "nw")
+                temp.append(FirstPlace)
+            if len(Names) >= 2:
+                SecondPlace = tk.Label(Inicio, text = Names[1] + Times[1], font = ("Arial", 20), background = "#4A1798")
+                SecondPlace.place(x = 350, y = 150, anchor = "nw")
+                temp.append(SecondPlace)
+            if len(Names) >= 3:
+                ThirdPlace = tk.Label(Inicio, text = Names[2] + Times[2], font = ("Arial", 20), background = "#4A1798")
+                ThirdPlace.place(x = 350, y = 200, anchor = "nw")
+                temp.append(ThirdPlace)
+            if len(Names) >= 4:
+                FourthPlace = tk.Label(Inicio, text = Names[3] + Times[3], font = ("Arial", 20), background = "#4A1798")
+                FourthPlace.place(x = 350, y = 250, anchor = "nw")
+                temp.append(FourthPlace)
+            if len(Names) >= 5:
+                FifthPlace = tk.Label(Inicio, text = Names[4] + Times[4], font = ("Arial", 20), background = "#4A1798")
+                FifthPlace.place(x = 350, y = 300, anchor = "nw")
+                temp.append(FifthPlace)
+            if len(Names) >= 6:
+                SeventhPlace = tk.Label(Inicio, text = Names[5] + Times[5], font = ("Arial", 20), background = "#4A1798")
+                SeventhPlace.place(x = 350, y = 350, anchor = "nw")
+                temp.append(SeventhPlace)
+            if len(Names) >= 7:
+                EightPlace = tk.Label(Inicio, text = Names[6] + Times[6], font = ("Arial", 20), background = "#4A1798")
+                EightPlace.place(x = 350, y = 400, anchor = "nw")
+                temp.append(EightPlace)
+            if len(Names) >= 8:
+                NinthPlace = tk.Label(Inicio, text = Names[7] + Times[7], font = ("Arial", 20), background = "#4A1798")
+                NinthPlace.place(x = 350, y = 450, anchor = "nw")
+                temp.append(NinthPlace)
+            if len(Names) >= 9:
+                TenthPlace = tk.Label(Inicio, text = Names[8] + Times[8], font = ("Arial", 20), background = "#4A1798")
+                TenthPlace.place(x = 350, y = 500, anchor = "nw")
+                temp.append(TenthPlace)
+            if len(Names) >= 10:
+                ElevenPlace = tk.Label(Inicio, text = Names[9] + Times[9], font = ("Arial", 20), background = "#4A1798")
+                ElevenPlace.place(x = 350, y = 550, anchor = "nw")
+                temp.append(ElevenPlace)
+    
+    
+        elif TimeDisplaying == False:
+            TimeRanking = open("RankingByTime.txt", "r")
+            TimeRankingList = TimeRanking.readlines()
+            TimeRanking.close()
+            
+            Names = []
+            Times = []
+            
+    
+            for i in range(len(TimeRankingList)):
+                if i % 2 == 0:
+                    Names.append(TimeRankingList[i][0:-1])
+                elif i % 2 == 1:
+                    Times.append(TimeRankingList[i][0:-1])
+        
+            if len(Names) >= 1:
+                FirstPlace = tk.Label(Inicio, text = Names[0] + Times[0], font = ("Arial", 20), background = "#4A1798")
+                FirstPlace.place(x = 350, y = 100, anchor = "nw")
+                temp.append(FirstPlace)
+            if len(Names) >= 2:
+                SecondPlace = tk.Label(Inicio, text = Names[1] + Times[1], font = ("Arial", 20), background = "#4A1798")
+                SecondPlace.place(x = 350, y = 150, anchor = "nw")
+                temp.append(SecondPlace)
+            if len(Names) >= 3:
+                ThirdPlace = tk.Label(Inicio, text = Names[2] + Times[2], font = ("Arial", 20), background = "#4A1798")
+                ThirdPlace.place(x = 350, y = 200, anchor = "nw")
+                temp.append(ThirdPlace)
+            if len(Names) >= 4:
+                FourthPlace = tk.Label(Inicio, text = Names[3] + Times[3], font = ("Arial", 20), background = "#4A1798")
+                FourthPlace.place(x = 350, y = 250, anchor = "nw")
+                temp.append(FourthPlace)
+            if len(Names) >= 5:
+                FifthPlace = tk.Label(Inicio, text = Names[4] + Times[4], font = ("Arial", 20), background = "#4A1798")
+                FifthPlace.place(x = 350, y = 300, anchor = "nw")
+                temp.append(FifthPlace)
+            if len(Names) >= 6:
+                SeventhPlace = tk.Label(Inicio, text = Names[5] + Times[5], font = ("Arial", 20), background = "#4A1798")
+                SeventhPlace.place(x = 350, y = 350, anchor = "nw")
+                temp.append(SeventhPlace)
+            if len(Names) >= 7:
+                EightPlace = tk.Label(Inicio, text = Names[6] + Times[6], font = ("Arial", 20), background = "#4A1798")
+                EightPlace.place(x = 350, y = 400, anchor = "nw")
+                temp.append(EightPlace)
+            if len(Names) >= 8:
+                NinthPlace = tk.Label(Inicio, text = Names[7] + Times[7], font = ("Arial", 20), background = "#4A1798")
+                NinthPlace.place(x = 350, y = 450, anchor = "nw")
+                temp.append(NinthPlace)
+            if len(Names) >= 9:
+                TenthPlace = tk.Label(Inicio, text = Names[8] + Times[8], font = ("Arial", 20), background = "#4A1798")
+                TenthPlace.place(x = 350, y = 500, anchor = "nw")
+                temp.append(TenthPlace)
+            if len(Names) >= 10:
+                ElevenPlace = tk.Label(Inicio, text = Names[9] + Times[9], font = ("Arial", 20), background = "#4A1798")
+                ElevenPlace.place(x = 350, y = 550, anchor = "nw")
+                temp.append(ElevenPlace)
+                
+        TimeDisplaying = not TimeDisplaying
+    
+    
+    
+    Change_button = tk.Button(Inicio, command = change_label, text = "Cambiar de Ranking")
+    Change_button.place(x = 200, y = 100, anchor = "nw")
+            
+    
+    
+    
+    
+    
+        
+    
+                
+    
 
 
 def NewAccountWindow(window, Inicio):
