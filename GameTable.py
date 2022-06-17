@@ -23,7 +23,7 @@ pygame.mixer.init()
 pygame.mixer.music.load('morse-code-alphabet.ogg')
 pygame.mixer.music.play()
 
-ProtoBoard = pyfirmata.Arduino('COM4')   #Se establece cual es el pin en el cual esta funcionando el arduino 
+ProtoBoard = pyfirmata.Arduino('COM3')   #Se establece cual es el pin en el cual esta funcionando el arduino 
 
 it = pyfirmata.util.Iterator(ProtoBoard) #Se itera en la lectura del arduino 
 it.start()
@@ -35,6 +35,8 @@ s_pin=ProtoBoard.get_pin('d:11:i')
 d_pin=ProtoBoard.get_pin('d:9:i')
 e_pin=ProtoBoard.get_pin('d:13:i')
 q_pin=ProtoBoard.get_pin('d:12:i')
+
+
 
 def TurnOnLight(pin, board): #Se crea una funcion que prende la luz led por un segundo dada la indicacion de un pin en el arduino
     board.digital[pin].write(1)
@@ -286,6 +288,9 @@ def Play_Game(cursor):
             
             if HaveIWon or HaveEnemyWon: #Cuando el jugador o el enemigo ganaron
                 run = False #Se cierra el juego 
+                if HaveIWon:
+                    
+                    FuncionesArturo.end_window(User)
                 
             if val == 0: #Si la casilla que selecciona el jugador no tiene bote entonces se le cede el turno al enemigo 
                 ImPlaying = False

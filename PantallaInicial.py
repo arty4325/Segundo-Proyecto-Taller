@@ -342,10 +342,10 @@ def NewAccountWindow(window, Inicio): #Esta variable permite crear una nueva cue
         MBoats = MediumBoats.get()
         SBoats = SmallBoats.get()
         
-        
-        window.destroy()
-        FuncionesArturo.CreateBoards(True, User, [int(BBoats), int(MBoats), int(SBoats)])
-        GameTable.RunGame(User, [int(BBoats), int(MBoats), int(SBoats)], [], True)  #Se convierte todo a numeros 
+        if (int(BBoats)*4 + int(MBoats)*3 + int(SBoats)*2) <= 100:
+            window.destroy()
+            FuncionesArturo.CreateBoards(True, User, [int(BBoats), int(MBoats), int(SBoats)])
+            GameTable.RunGame(User, [int(BBoats), int(MBoats), int(SBoats)], [], True)  #Se convierte todo a numeros 
         #Enteros y se llama a la ventana de pygame 
     
     def ReturnButton():

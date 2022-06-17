@@ -32,11 +32,11 @@ seconds = None
 
 def clock():
     global seconds 
-    print(seconds)
     seconds = seconds + 1
     time.sleep(1)
     return clock()
 
+global User
 def CreateBoards(Bool, User, Boats):
     """
             Instituto Tecnológico de Costa Rica
@@ -546,7 +546,65 @@ def build_podium(user): #Esta funcion se encarga de organizar el salon de la fam
     return RankedTimeTime, RankedTimeNames
     
     
-            
+def labelDest(List):
+    if List == []:
+        return [] # Condicion de finalizacion 
+    else:
+        (List[0]).destroy() # Se destruyen los elementos 
+        labelDest(List[1:]) # Se hace un slicing       
+    
+    
+def end_window(User):
+    global ENEMYBOARD
+    window = tk.Tk()
+    window.title("Battleship")
+    window.minsize(700, 700)
+    window.resizable(False, False)
+    
+    Inicio = tk.Canvas(window, width = 700, height = 700)
+    Inicio.place(x = 0, y = 0)
+    
+    temp = []
+    
+    Labelmanual = tk.Label(Inicio, text = "Jugador " + User, font = "Arial")
+    Labelmanual.place(x = 500, y = 50, anchor = "ne")
+    
+    Fallos = 0
+    Aciertos = 0
+    
+    for i in range(10):
+        for k in range(10):
+            if ENEMYBOARD[i][k] == 2:
+                Fallos += 1
+            elif ENEMYBOARD[i][k] == 3:
+                Aciertos += 1
+    
+    LabelAciertos = tk.Label(Inicio, text = "Aciertos " + str(Aciertos), font = "Arial")
+    LabelAciertos.place(x = 500, y = 100, anchor = "ne")
+    
+    LabelFallos = tk.Label(Inicio, text = "Fallos " + str(Fallos), font = "Arial")
+    LabelFallos.place(x = 500, y = 150, anchor = "ne")
+    
+    LabelIntentos = tk.Label(Inicio, text = "Total de Intentos " + str(Aciertos + Fallos), font = "Arial")
+    LabelIntentos.place(x = 500, y = 200, anchor = "ne")
+    
+    temp.append(LabelAciertos)
+    temp.append(LabelFallos)
+    temp.append(LabelIntentos)
+    temp.append(Labelmanual)
+    
+    def ReturntoMainWindow(): 
+        Inicio.delete("all")
+        labelDest(temp)
+        import PantallaInicial
+        PantallaInicial.PantallaInicial(window, Inicio)
+    
+    RetButton = tk.Button(Inicio, command = ReturntoMainWindow, text = "Volver") 
+    RetButton.place(x = 500, y = 400, anchor = "ne")
+    temp.append(RetButton)
+    
+    
+        
     
     
     
