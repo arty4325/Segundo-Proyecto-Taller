@@ -415,5 +415,7 @@ def main():
     
     
     pygame.quit()
+if __name__ == "__main__": #Se revisa que si se corre este file solo se va a correr esta ventana aqui
+    main()
 
 

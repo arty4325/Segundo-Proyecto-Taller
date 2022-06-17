@@ -392,6 +392,18 @@ class Piece:  #Esta clase se encarga de dibujar el tablero y los circulos en la 
 
 
 def build_podium(user): #Esta funcion se encarga de organizar el salon de la fama en tiempos de juego y en nombre de usuario 
+    """
+        Instituto Tecnológico de Costa Rica
+            Ingenieria en Computadores
+            Nombre: CreateBoards(Bool, User, Boats)
+    Lenguaje: Python 3.8.0
+    Autor: Oscar Acuña Durán(2022049304), Mariana Saray Rojas Rojas (2020076936)
+    Version: 1.0
+    Fecha de última modificación: Junio 16/ 2022
+    Entradas: la entrada consiste en el nombre de usuario 
+    Restricciones: Tiene que ser un string
+    Salidas: Construye el podium
+    """
     global seconds
     UserTimeTime = [] #Lista la organizacion del tiempo cuando se organiza con el tiempo 
     UserTimeName = []  #Lista para la organizacion de los nombres cuando se organiza con el tiempo 
