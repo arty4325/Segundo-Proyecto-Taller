@@ -23,18 +23,18 @@ pygame.mixer.init()
 pygame.mixer.music.load('morse-code-alphabet.ogg')
 pygame.mixer.music.play()
 
-ProtoBoard = pyfirmata.Arduino('COM3')   #Se establece cual es el pin en el cual esta funcionando el arduino 
+#ProtoBoard = pyfirmata.Arduino('COM3')   #Se establece cual es el pin en el cual esta funcionando el arduino 
 
-it = pyfirmata.util.Iterator(ProtoBoard) #Se itera en la lectura del arduino 
-it.start()
+#it = pyfirmata.util.Iterator(ProtoBoard) #Se itera en la lectura del arduino 
+#it.start()
 
 #Se le da una variable al funcionamiento de cada pin 
-w_pin=ProtoBoard.get_pin('d:10:i') 
-a_pin=ProtoBoard.get_pin('d:8:i')
-s_pin=ProtoBoard.get_pin('d:11:i')
-d_pin=ProtoBoard.get_pin('d:9:i')
-e_pin=ProtoBoard.get_pin('d:13:i')
-q_pin=ProtoBoard.get_pin('d:12:i')
+#w_pin=ProtoBoard.get_pin('d:10:i') 
+#a_pin=ProtoBoard.get_pin('d:8:i')
+#s_pin=ProtoBoard.get_pin('d:11:i')
+#d_pin=ProtoBoard.get_pin('d:9:i')
+#e_pin=ProtoBoard.get_pin('d:13:i')
+#q_pin=ProtoBoard.get_pin('d:12:i')
 
 
 
@@ -272,19 +272,19 @@ def Play_Game(cursor):
         if keys_pressed[pygame.K_q]: #Esto quiere decir qeu se selecciono una casilla en el tablero 
             val = board.return_what_i_selected((cursor.x - 750)//70, (cursor.y%750)//70) #valor que hay en lsa coordenadas de esa casilla 
             #En el tablero enemgio 
-            if val == 0:  #Esto quiere decir que en la casilla que se seelecciono, no habia nada 
-                Thread(target = TurnOnLight, args = (2, ProtoBoard, )).start() #Se enciende la primera luz led del control
-            if val == 1: #Esto quiere decir que habia un bote en la casilla que se selecciono 
-                Thread(target = TurnOnLight, args = (3, ProtoBoard, )).start() #Se enciende la segunda luz del control
+            #if val == 0:  #Esto quiere decir que en la casilla que se seelecciono, no habia nada 
+                #Thread(target = TurnOnLight, args = (2, ProtoBoard, )).start() #Se enciende la primera luz led del control
+            #if val == 1: #Esto quiere decir que habia un bote en la casilla que se selecciono 
+                #Thread(target = TurnOnLight, args = (3, ProtoBoard, )).start() #Se enciende la segunda luz del control
             if val == 0 or val == 1: #Se indica en la matiz que es lo que paso, si habia un bote se pone un 3 en la 
                 #matriz, y si no habia uno, se coloca un 2
                 board.draw_selected_notkilled_boat((cursor.x - 750)//70, (cursor.y%750)//70, WIN) #indicacion y escritura en la matriz 
             HaveIWon, HaveEnemyWon = FuncionesArturo.check_the_board() #Revisa si el jugador ya gano o si el enemigo gano 
             if HaveIWon: #Si el jugador gano 
                 Top10 = FuncionesArturo.build_podium(User)[1][0:9] #Se revisa si esta en el ranking 
-                if User in Top10: #Si esta en el ranking 
-                    Thread(target = TurnOnLight, args = (5, ProtoBoard, )).start() #Se enciende la ultima luz led del control
-                Thread(target = TurnOnLight, args = (4, ProtoBoard, )).start() #Se enciende la tercera luz del control led
+                #if User in Top10: #Si esta en el ranking 
+                    #Thread(target = TurnOnLight, args = (5, ProtoBoard, )).start() #Se enciende la ultima luz led del control
+                #Thread(target = TurnOnLight, args = (4, ProtoBoard, )).start() #Se enciende la tercera luz del control led
             
             if HaveIWon or HaveEnemyWon: #Cuando el jugador o el enemigo ganaron
                 run = False #Se cierra el juego 
@@ -326,43 +326,12 @@ def main():
     while run:
         time.sleep(0.1)
         
-        d = d_pin.read() #Se leen los pines del arduino 
-        s = s_pin.read()
-        a = a_pin.read()
-        w = w_pin.read()
-        e = e_pin.read()
-        q = q_pin.read()
-        
-        
-        if w == True: #Dependiendo del pin que se lea, se presiona una tecla en el teclado 
-            keyboard.press("w")
-        elif w == False:
-            keyboard.release("w")
-        
-        if a == True:
-            keyboard.press("a")
-        elif a == False:
-            keyboard.release("a")
-        
-        if s == True:
-            keyboard.press("s")
-        elif s == False:
-            keyboard.release("s")
-        
-        if d == True:
-            keyboard.press("d")
-        elif d == False:
-            keyboard.release("d")
-            
-        if q == True:
-            keyboard.press("q")
-        elif q == False:
-            keyboard.release("q")
-            
-        if e == True:
-            keyboard.press("e")
-        elif e == False:
-            keyboard.release("e")
+        #d = d_pin.read() #Se leen los pines del arduino 
+        #s = s_pin.read()
+        #a = a_pin.read()
+        #w = w_pin.read()
+        #e = e_pin.read()
+        #q = q_pin.read()
         
         clock.tick(FPS) #Se corre el jeugo en la cantidad de frames per second predeterminada 
         
